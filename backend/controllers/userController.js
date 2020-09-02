@@ -2,14 +2,27 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const Joi = require("joi");
+const bcrypt = require("bcryptjs");
+
+const salt = 10;
 
 exports.getUser = async (req, res) => {
   const user = await User.find();
   res.json(user);
 };
 
+const loginValidationSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+  name: Joi.string().min(2).required(),
+});
+
 exports.getSpecificUser = async (req, res) => {
   try {
+    const validatedData = await loginValidationSchema.validateAsync(
+      ({ email, password, name } = req.body)
+    );
+
     const user = await User.findOne({ name: req.params.name });
     if (user) {
       const payload = {
@@ -26,11 +39,14 @@ exports.getSpecificUser = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.json("user is not in database");
+    const errorMessage = error.details
+      ? error.details[0].message
+      : "Something went wrong";
+    res.json(errorMessage);
   }
 };
 
-const validationSchema = Joi.object({
+const registerValidationSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
   name: Joi.string().min(2).required(),
@@ -42,34 +58,34 @@ const validationSchema = Joi.object({
 });
 
 exports.postUser = async (req, res) => {
-  const {
-    email,
-    password,
-    name,
-    last_name,
-    age,
-    profile_pic,
-    sex,
-    relationship_status,
-  } = req.body;
-
   try {
-    const validatedData = await validationSchema.validateAsync({
+    // i done it that way cus email is not defined'
+    const validatedData = await registerValidationSchema.validateAsync({
+      email: req.body.email,
+      password: req.body.password,
+      name: req.body.name,
+      last_name: req.body.last_name,
+      age: req.body.age,
+      profile_pic: req.body.profile_pic,
+      sex: req.body.sex,
+      relationship_status: req.body.relationship_status,
+    });
+
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const {
       email,
-      password,
       name,
       last_name,
       age,
       profile_pic,
       sex,
       relationship_status,
-    });
-
-    console.log(validatedData);
+    } = validatedData;
 
     const user = new User({
       email,
-      password,
+      password: hashedPassword,
       name,
       last_name,
       age,
@@ -77,6 +93,7 @@ exports.postUser = async (req, res) => {
       sex,
       relationship_status,
     });
+
     user.save();
     res.json("user added");
   } catch (error) {
