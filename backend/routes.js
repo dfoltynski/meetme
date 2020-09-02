@@ -6,7 +6,7 @@ const {
   getSpecificUser,
   postUser,
   secretInfo,
-} = require("./controllers/user");
+} = require("./controllers/userController");
 
 const verify = (req, res, next) => {
   const token = req.header("Bearer-Authorization");
