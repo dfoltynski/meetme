@@ -3,8 +3,36 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
 const salt = 10;
+
+const generateToken = (user) => {
+  const payload = {
+    id: user._id,
+    name: user.name,
+  };
+  const token = jwt.sign(payload, process.env.SECRET, {
+    expiresIn: "1m",
+  });
+
+  return token;
+};
+
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+
+  if (await bcrypt.compare(password, user.password)) {
+    const token = generateToken(user);
+    console.log(token);
+    res.header("Bearer-Authorization", token);
+    res.json({ message: "zalogowan", token });
+  }
+
+  res.json("login");
+};
 
 exports.getUser = async (req, res) => {
   const user = await User.find();
@@ -25,15 +53,7 @@ exports.getSpecificUser = async (req, res) => {
 
     const user = await User.findOne({ name: req.params.name });
     if (user) {
-      const payload = {
-        id: user._id,
-        name: user.name,
-      };
-      const token = jwt.sign(payload, process.env.SECRET, {
-        expiresIn: "1m",
-      });
-      console.log(token);
-      res.header("Bearer-Authorization", token).send(user);
+      res.json(user);
     } else {
       throw new Error("user is not in database");
     }

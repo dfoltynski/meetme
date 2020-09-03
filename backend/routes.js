@@ -1,11 +1,13 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
+
 const {
   getUser,
   getSpecificUser,
   postUser,
   secretInfo,
+  loginUser,
 } = require("./controllers/userController");
 
 const verify = (req, res, next) => {
@@ -33,8 +35,13 @@ router.get("/", (req, res) => {
 router.get("/users/", getUser);
 router.get("/users/:name", getSpecificUser);
 
-router.get("/secret/", verify, secretInfo);
+router.get("/secret/", secretInfo);
+
+router.get("/auth-me/", verify, (req, res) => {
+  res.sendStatus(200);
+});
 
 router.post("/users/", postUser);
+router.post("/users/login", loginUser);
 
 module.exports = router;
