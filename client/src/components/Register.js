@@ -26,15 +26,25 @@ function Register() {
             email: "",
             name: "",
             password: "",
-            date: "",
+            age: "",
             sex: "",
             relationship_status: "",
         },
         onSubmit: async (values) => {
             const data = new FormData();
             data.append("file", selectedFile);
-            // const jsonValues = JSON.stringify(values);
-            data.append("data", { ...values });
+            const jsonValues = JSON.stringify(values);
+            // data.append("data", {
+            //     email: values.email,
+            //     name: values.name,
+            //     password: values.password,
+            //     age: values.age,
+            //     sex: values.sex,
+            //     relationship_status: values.relationship_status,
+            // });
+            console.log(values);
+            // data.append("data", [dick]);
+            Object.keys(values).forEach((key) => data.append(key, values[key]));
             await axios.post("http://localhost:8080/v1/users/", data);
             // POST http://localhost:8080/v1/users/ values and data
         },
@@ -146,10 +156,10 @@ function Register() {
                         </label>
                     </div>
                     <Input
-                        id="date"
+                        id="age"
                         type="date"
                         onChange={formik.handleChange}
-                        value={formik.values.date}
+                        value={formik.values.age}
                     ></Input>
                     {previewImage ? (
                         <img

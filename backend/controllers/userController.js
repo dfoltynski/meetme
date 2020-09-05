@@ -1,6 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
+const { User, userProfilePicture } = require("../models/userModel");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
@@ -72,7 +72,6 @@ const registerValidationSchema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
     name: Joi.string().min(2).required(),
-    age: Joi.number().required().min(18),
     sex: Joi.string().required(),
     relationship_status: Joi.string(),
 });
@@ -99,39 +98,40 @@ exports.postUser = (req, res) => {
 
             let imageData = fs.readFileSync(req.file.path);
             console.log(imageData);
-            console.log(req.body.data);
+
+            console.log(req.file.mimetype);
 
             // i done it that way cus email is not defined'
-            // const validatedData = await registerValidationSchema.validateAsync({
-            //     email: req.body.email,
-            //     password: req.body.password,
-            //     name: req.body.name,
-            //     age: req.body.age,
-            //     sex: req.body.sex,
-            //     relationship_status: req.body.relationship_status,
-            // });
+            const validatedData = await registerValidationSchema.validateAsync({
+                email: req.body.email,
+                password: req.body.password,
+                name: req.body.name,
+                sex: req.body.sex,
+                relationship_status: req.body.relationship_status,
+            });
 
-            // const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-            // const {
-            //     email,
-            //     name,
-            //     age,
-            //     sex,
-            //     relationship_status,
-            // } = validatedData;
+            const { email, name, sex, relationship_status } = validatedData;
 
-            // const user = new User({
-            //     email,
-            //     password: hashedPassword,
-            //     name,
-            //     age,
-            //     profile_pic,
-            //     sex,
-            //     relationship_status,
-            // });
+            const userPic = new userProfilePicture({
+                name: req.file.originalname,
+                type: req.file.mimetype,
+                data: imageData,
+            });
 
-            // user.save();
+            const user = new User({
+                email,
+                password: hashedPassword,
+                name,
+                age: req.body.age,
+                profile_pic: userPic._id,
+                sex,
+                relationship_status,
+            });
+
+            userPic.save();
+            user.save();
             res.json("user added");
         });
     } catch (error) {

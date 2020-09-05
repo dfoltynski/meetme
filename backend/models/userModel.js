@@ -5,14 +5,27 @@ const userSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
-    age: { type: Number, required: true },
-    profile_pic: { name: String, type: String, data: Buffer, required: true },
+    age: { type: Date, required: true },
+    profile_pic: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userProfilePicture",
+    },
     friends: [],
     pin: {},
     sex: { type: String },
     relationship_status: { type: String },
 });
 
-const User = mongoose.model("user", userSchema);
+const userProfilePictureSchema = new Schema({
+    name: String,
+    type: String,
+    data: Buffer,
+});
 
-module.exports = User;
+const User = mongoose.model("user", userSchema);
+const userProfilePicture = mongoose.model(
+    "userProfilePicture",
+    userProfilePictureSchema
+);
+
+module.exports = { User, userProfilePicture };
