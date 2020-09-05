@@ -1,14 +1,14 @@
 import React from "react";
 import "./App.css";
 
-import { Login } from "./components";
+import { Register } from "./components";
 
 function App() {
-  return (
-    <div className="App">
-      <Login />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Register />
+        </div>
+    );
 }
 
 export default App;
