@@ -33,20 +33,9 @@ function Register() {
         onSubmit: async (values) => {
             const data = new FormData();
             data.append("file", selectedFile);
-            const jsonValues = JSON.stringify(values);
-            // data.append("data", {
-            //     email: values.email,
-            //     name: values.name,
-            //     password: values.password,
-            //     age: values.age,
-            //     sex: values.sex,
-            //     relationship_status: values.relationship_status,
-            // });
-            console.log(values);
-            // data.append("data", [dick]);
+
             Object.keys(values).forEach((key) => data.append(key, values[key]));
             await axios.post("http://localhost:8080/v1/users/", data);
-            // POST http://localhost:8080/v1/users/ values and data
         },
     });
 
