@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import "./App.css";
 
-import { Register, Login } from "./components";
+import { Register, Login, Map, Dashboard } from "./components";
 
 function App() {
   return (
@@ -10,6 +10,8 @@ function App() {
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/map" component={Map} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
     </div>
   );

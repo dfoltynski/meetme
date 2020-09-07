@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { useCookies, Cookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 
 import { Wrapper, FormContainer, Form, Input } from "./styledcomponents";
 
@@ -36,9 +36,18 @@ const Login = () => {
           values
         );
         let d = new Date();
-        d.setTime(d.getTime() + 45 * 60 * 1000);
+        d.setTime(d.getTime() + 3 * 60 * 1000);
         setCookie("token", token.data.token, { expires: d });
         setUserError(null);
+        console.log(token.data.token);
+        const res = await axios.get("http://localhost:8080/v1/auth-me/", {
+          headers: {
+            "Bearer-Authorization": token.data.token,
+          },
+        });
+        if (res.status === 200) {
+          window.location = "/map";
+        }
       } catch (err) {
         console.log("Error: ", err);
         setUserError("Invalid email or password");

@@ -14,9 +14,10 @@ const generateToken = (user) => {
   const payload = {
     id: user._id,
     name: user.name,
+    email: user.email,
   };
   const token = jwt.sign(payload, process.env.SECRET, {
-    expiresIn: "1m",
+    expiresIn: "3m",
   });
 
   return token;
@@ -124,6 +125,7 @@ exports.postUser = (req, res) => {
         name,
         age: req.body.age,
         profile_pic: userPic._id,
+        friends: ["dawid@dawid.com", "dawid2@dawid.com"],
         sex,
       });
 

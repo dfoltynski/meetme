@@ -11,6 +11,7 @@ const userSchema = new Schema({
     ref: "userProfilePicture",
   },
   friends: [],
+  messages: [],
   pin: {},
   sex: { type: String },
 });

@@ -50,3 +50,15 @@ export const Section = styled.section`
   align-items: center;
   flex-direction: column;
 `;
+
+export const DashboardSection = styled.section`
+  text-align: center;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+  -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+  box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+  width: 30em;
+  height: 35em;
+`;
