@@ -30,10 +30,10 @@ exports.loginUser = async (req, res) => {
     const token = generateToken(user);
     console.log(token);
     res.header("Bearer-Authorization", token);
-    res.json({ message: "zalogowan", token });
+    res.status(200).json({ message: "zalogowan", token });
+  } else {
+    res.status(401).json("there is no such a user in database");
   }
-
-  res.json("login");
 };
 
 exports.getUser = async (req, res) => {
