@@ -36,8 +36,9 @@ const Login = () => {
           values
         );
         let d = new Date();
-        d.setTime(d.getTime() + 3 * 60 * 1000);
+        d.setTime(d.getTime() + 30 * 60 * 1000);
         setCookie("token", token.data.token, { expires: d });
+        setCookie("email", values.email);
         setUserError(null);
         console.log(token.data.token);
         const res = await axios.get("http://localhost:8080/v1/auth-me/", {
@@ -46,7 +47,7 @@ const Login = () => {
           },
         });
         if (res.status === 200) {
-          window.location = "/map";
+          window.location = "/dashboard";
         }
       } catch (err) {
         console.log("Error: ", err);

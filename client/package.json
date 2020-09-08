@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "axios": "^0.20.0",
     "formik": "^2.1.5",
+    "jsonwebtoken": "^8.5.1",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
@@ -15,6 +16,7 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "0.9.5",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {},

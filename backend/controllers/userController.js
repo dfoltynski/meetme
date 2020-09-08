@@ -17,7 +17,7 @@ const generateToken = (user) => {
     email: user.email,
   };
   const token = jwt.sign(payload, process.env.SECRET, {
-    expiresIn: "3m",
+    expiresIn: "30m",
   });
 
   return token;
