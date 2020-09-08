@@ -18,7 +18,6 @@ const verify = (req, res, next) => {
       if (err) console.log(err);
 
       if (validToken) {
-        console.log(token);
         next();
       } else {
         res.sendStatus(403);

@@ -38,9 +38,8 @@ const Login = () => {
         let d = new Date();
         d.setTime(d.getTime() + 30 * 60 * 1000);
         setCookie("token", token.data.token, { expires: d });
-        setCookie("email", values.email);
+        setCookie("email", values.email, { expires: d });
         setUserError(null);
-        console.log(token.data.token);
         const res = await axios.get("http://localhost:8080/v1/auth-me/", {
           headers: {
             "Bearer-Authorization": token.data.token,
@@ -53,6 +52,8 @@ const Login = () => {
         console.log("Error: ", err);
         setUserError("Invalid email or password");
         removeCookie("token");
+        removeCookie("io");
+        removeCookie("email");
       }
     },
   });

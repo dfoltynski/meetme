@@ -25,7 +25,6 @@ const Dashboard = () => {
   const message = useRef();
 
   const startChat = (e) => {
-    console.log(e.target.value);
     setChatUser(e.target.value);
     if (chatUser == e.target.value) {
       chatRef.current.classList.toggle("toggle__chat");
@@ -42,7 +41,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    socket.emit("add user to array", cookie.email);
+    socket.emit("add user", cookie.email, cookie.io);
     const auth = async () => {
       try {
         let res = await axios.get("http://localhost:8080/v1/auth-me/", {
@@ -58,6 +57,9 @@ const Dashboard = () => {
         });
         setFriends(friendsRes.data);
       } catch (err) {
+        removeCookie("token");
+        removeCookie("io");
+        removeCookie("email");
         window.location = "/login";
       }
     };

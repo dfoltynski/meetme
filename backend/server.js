@@ -38,21 +38,36 @@ const io = require("socket.io")(server);
 const users = [];
 
 io.on("connection", (socket) => {
-  console.log(`new user connected.`);
   //   Object.keys(socket).forEach((key) => console.log(key, socket[key]));
 
-  socket.on("add user to array", (email) => {
-    // if (email) {
-    // if(users.includes(email)) {
-    //   console.log(users.filter((user) => user.email === email));
+  socket.on("add user", (email, id) => {
+    // users.map((user) => {
+    //   if (user.email !== email) {
+    // users[users.indexOf(user)] = { email, id: socket.id };
+    // users.push({ email, id: socket.id });
+    //   } else if (user.id !== socket.id) {
+    // users[users.indexOf(user)] = { id: socket.id };
+    // users[users.indexOf(user)] = { email, id: socket.id };
+    // users.push({ id });
+    //   }
+    // });
 
-    users.map((user) =>
-      user.email === email ? users.push({ email, id: socket.id }) : null
+    users.forEach((user) => {
+      if (user.email === email) {
+        user.id = socket.id;
+      } else {
+        users.push({ email, id: socket.id });
+      }
+    });
+
+    users.map(
+      (user) => {
+        console.log(user);
+      }
+      //   user.email == email ? null : users.push({ email, id: socket.id })
     );
 
-    console.log(users);
-
-    users.push({ email, id: socket.id });
+    // users.push({ email, id: socket.id });
     // }
     // }
   });

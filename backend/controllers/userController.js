@@ -29,7 +29,6 @@ exports.loginUser = async (req, res) => {
 
   if (await bcrypt.compare(password, user.password)) {
     const token = generateToken(user);
-    console.log(token);
     res.header("Bearer-Authorization", token);
     res.status(200).json({ message: "zalogowan", token });
   } else {
@@ -97,9 +96,6 @@ exports.postUser = (req, res) => {
       }
 
       let imageData = fs.readFileSync(req.file.path);
-      console.log(imageData);
-
-      console.log(req.file.mimetype);
 
       // i done it that way cus email is not defined'
       const validatedData = await registerValidationSchema.validateAsync({
