@@ -35,48 +35,18 @@ const server = app.listen(port, (err) => {
 
 const io = require("socket.io")(server);
 
-const users = [];
+const users = new Map();
 
 io.on("connection", (socket) => {
-  //   Object.keys(socket).forEach((key) => console.log(key, socket[key]));
+  socket.on("add user", (email) => {
+    users.set(email, socket.id);
 
-  socket.on("add user", (email, id) => {
-    // users.map((user) => {
-    //   if (user.email !== email) {
-    // users[users.indexOf(user)] = { email, id: socket.id };
-    // users.push({ email, id: socket.id });
-    //   } else if (user.id !== socket.id) {
-    // users[users.indexOf(user)] = { id: socket.id };
-    // users[users.indexOf(user)] = { email, id: socket.id };
-    // users.push({ id });
-    //   }
-    // });
-
-    users.forEach((user) => {
-      if (user.email === email) {
-        user.id = socket.id;
-      } else {
-        users.push({ email, id: socket.id });
-      }
-    });
-
-    users.map(
-      (user) => {
-        console.log(user);
-      }
-      //   user.email == email ? null : users.push({ email, id: socket.id })
-    );
-
-    // users.push({ email, id: socket.id });
-    // }
-    // }
+    console.log(users);
   });
 
-  socket.on("start chat", (message, friend) => {
-    console.log(`${friend}: ${message}`);
-    for (let i = 0; i < users.length; i++) {
-      console.log(users[i]);
-    }
-    // socket.emit("start chat", (message, friend));
+  socket.on("start chat", (message, friend, sender) => {
+    console.log(`${sender}: ${message} to ${friend}`);
+    console.log(users.get(friend));
+    io.to(users.get(friend)).emit("send message", sender, message);
   });
 });

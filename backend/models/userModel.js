@@ -22,10 +22,16 @@ const userProfilePictureSchema = new Schema({
   data: Buffer,
 });
 
+const socketUsersSchema = new Schema({
+  email: {type: String, required: true},
+  id: {type: String, required: true}
+})
+
 const User = mongoose.model("user", userSchema);
 const userProfilePicture = mongoose.model(
   "userProfilePicture",
   userProfilePictureSchema
 );
+const socketUsers = mongoose.model("socketUser", socketUsersSchema)
 
-module.exports = { User, userProfilePicture };
+module.exports = { User, userProfilePicture,socketUsers };

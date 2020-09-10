@@ -125,6 +125,7 @@ exports.postUser = (req, res) => {
         sex,
       });
 
+
       userPic.save();
       user.save();
       res.json("user added");

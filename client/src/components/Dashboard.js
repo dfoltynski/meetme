@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import io from "socket.io-client";
-import jwt from "jsonwebtoken";
 import "../App.css";
 
 import {
@@ -13,12 +12,10 @@ import {
   FormContainer,
 } from "./styledcomponents";
 
-// TODO: display friends, click on one of them and start real-time conversation
-
 const socket = io("http://localhost:8080");
 
 const Dashboard = () => {
-  const [cookie, removeCookie] = useCookies(["token"]);
+  const [cookie, removeCookie] = useCookies();
   const [friends, setFriends] = useState([]);
   const [chatUser, setChatUser] = useState("");
   const chatRef = useRef();
@@ -33,15 +30,21 @@ const Dashboard = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    socket.emit("start chat", message.current.value, chatUser);
+    const sender = cookie.email;
+    socket.emit("start chat", message.current.value, chatUser, sender);
     socket.on("start chat", (message, friend) => {
       console.log(`${friend}: ${message}`);
     });
     message.current.value = "";
+    message.current.focus();
   };
 
+  socket.on("send message", (sender, message) => {
+    console.log(`${sender}: ${message}`);
+  });
+
   useEffect(() => {
-    socket.emit("add user", cookie.email, cookie.io);
+    socket.emit("add user", cookie.email);
     const auth = async () => {
       try {
         let res = await axios.get("http://localhost:8080/v1/auth-me/", {

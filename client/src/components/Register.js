@@ -161,7 +161,7 @@ function Register() {
           ) : (
             <Dropzone
               onDrop={(acceptedFile) => createImagePreview(acceptedFile)}
-              accept="image/png, image/jpeg, image/jpg"
+              accept="image/png, image/jpeg, image/jpg, image/jfif"
             >
               {({ getRootProps, getInputProps }) => (
                 <Section {...getRootProps()}>
