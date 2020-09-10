@@ -34,15 +34,20 @@ const Dashboard = () => {
     e.preventDefault();
     const sender = cookie.email;
     socket.emit("start chat", messageRef.current.value, chatUser, sender);
-    socket.on("start chat", (message, friend) => {
-      console.log(`${friend}: ${message}`);
-    });
+
+    setMessages([
+      ...messages,
+      { type: "my_message", message: messageRef.current.value },
+    ]);
+    console.log(`my messages ${messageRef.current.value}`);
     messageRef.current.value = "";
     messageRef.current.focus();
   };
 
-  socket.on("send message", (sender, message) => {
+  socket.on("send message", (sender, message, friend) => {
     console.log(`${sender}: ${message}`);
+    console.log(`received ${friend}: ${message}`);
+    setMessages([...messages, { type: "received_message", message }]);
   });
 
   useEffect(() => {
@@ -89,7 +94,15 @@ const Dashboard = () => {
             <div className="message__user">{chatUser}</div>
           </div>
           <div>
-            <div className="message__field"></div>
+            <div className="message__field">
+              {messages.map((message) =>
+                message.type === "my_message" ? (
+                  <div className="my_message">{message.message}</div>
+                ) : (
+                  <div className="received_message">{message.message}</div>
+                )
+              )}
+            </div>
             <div className="message__send__field">
               <form onSubmit={sendMessage}>
                 <input
@@ -106,18 +119,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {/* <MessageContainer ref={chatRef} className="toggle__chat">
-        <h1>Chat with {chatUser}</h1>
-        <Form
-          style={{ position: "relative", display: "block", minHeight: "45em" }}
-          onSubmit={sendMessage}
-        >
-          <div style={{ position: "absolute", top: "95%" }}>
-            <input name="message" type="text" ref={message} />
-            <input type="submit" value="send" />
-          </div>
-        </Form>
-      </MessageContainer> */}
     </Wrapper>
   );
 };

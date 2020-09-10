@@ -24,13 +24,43 @@
   display: flex;
 }
 
+.my_message {
+  display: block;
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 10px;
+  width: 10em;
+  display: inline-block;
+  word-wrap: break-word;
+  margin-left: auto;
+  background-color: #ebebeb;
+  color: black;
+}
+
+.received_message {
+  margin-right: auto;
+  background-color: #6400fa;
+  display: block;
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 10px;
+  color: white;
+  width: 10em;
+  display: inline-block;
+  word-wrap: break-word;
+}
+
 .message__user {
   margin: auto;
 }
 
 .message__field {
+  overflow-y: scroll;
   background-color: #fff;
   height: 15.5em;
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
 }
 
 .message__send__field {

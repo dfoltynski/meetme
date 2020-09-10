@@ -46,7 +46,8 @@ io.on("connection", (socket) => {
 
   socket.on("start chat", (message, friend, sender) => {
     console.log(`${sender}: ${message} to ${friend}`);
-    console.log(users.get(friend));
-    io.to(users.get(friend)).emit("send message", sender, message);
+    console.log("friend id: ", users.get(friend));
+    console.log("sender id: ", users.get(sender));
+    io.to(users.get(friend)).emit("send message", sender, message, friend);
   });
 });
