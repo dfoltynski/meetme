@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [chatUser, setChatUser] = useState("Select a friend to talk to...");
   const chatRef = useRef();
   const messageRef = useRef();
+  const messageFieldRef = useRef();
 
   const startChat = (e) => {
     setChatUser(e.target.value);
@@ -42,12 +43,14 @@ const Dashboard = () => {
     console.log(`my messages ${messageRef.current.value}`);
     messageRef.current.value = "";
     messageRef.current.focus();
+    // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
   };
 
   socket.on("send message", (sender, message, friend) => {
     console.log(`${sender}: ${message}`);
     console.log(`received ${friend}: ${message}`);
     setMessages([...messages, { type: "received_message", message }]);
+    // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
   });
 
   useEffect(() => {
@@ -94,7 +97,7 @@ const Dashboard = () => {
             <div className="message__user">{chatUser}</div>
           </div>
           <div>
-            <div className="message__field">
+            <div className="message__field" ref={messageFieldRef}>
               {messages.map((message) =>
                 message.type === "my_message" ? (
                   <div className="my_message">{message.message}</div>
