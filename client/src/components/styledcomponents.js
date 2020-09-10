@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.main`
+  position: relative;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -61,4 +62,9 @@ export const DashboardSection = styled.section`
   box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
   width: 30em;
   height: 35em;
+`;
+
+export const MessageContainer = styled(FormContainer)`
+  width: 20em;
+  height: 15em;
 `;
