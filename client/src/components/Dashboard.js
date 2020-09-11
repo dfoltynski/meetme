@@ -35,22 +35,24 @@ const Dashboard = () => {
     e.preventDefault();
     const sender = cookie.email;
     socket.emit("start chat", messageRef.current.value, chatUser, sender);
-
-    setMessages([
-      ...messages,
-      { type: "my_message", message: messageRef.current.value },
-    ]);
-    console.log(`my messages ${messageRef.current.value}`);
-    messageRef.current.value = "";
-    messageRef.current.focus();
+    if (messageRef.current.value) {
+      setMessages([
+        ...messages,
+        { type: "my_message", message: messageRef.current.value },
+      ]);
+      console.log(`my messages ${messageRef.current.value}`);
+      messageRef.current.value = "";
+      messageRef.current.focus();
+    }
     // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
   };
-
   socket.on("send message", (sender, message, friend) => {
-    console.log(`${sender}: ${message}`);
-    console.log(`received ${friend}: ${message}`);
-    setMessages([...messages, { type: "received_message", message }]);
-    // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
+    if (message) {
+      console.log(`${sender}: ${message}`);
+      console.log(`received ${friend}: ${message}`);
+      setMessages([...messages, { type: "received_message", message }]);
+      // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
+    }
   });
 
   useEffect(() => {
@@ -68,7 +70,8 @@ const Dashboard = () => {
             "Bearer-Authorization": cookie.token,
           },
         });
-        setFriends(friendsRes.data);
+        // setFriends(friendsRes.data);
+        console.log(friendsRes);
       } catch (err) {
         removeCookie("token");
         removeCookie("io");
@@ -83,13 +86,13 @@ const Dashboard = () => {
     <Wrapper>
       <DashboardSection>
         <h1>Friends</h1>
-        {friends.map((friend) => (
+        {/* {friends.map((friend) => (
           <div>
             <button onClick={(e) => startChat(e)} value={friend}>
               {friend}
             </button>
           </div>
-        ))}
+        ))} */}
       </DashboardSection>
       <div className="toggle__chat" ref={chatRef}>
         <div className="message__conteiner">

@@ -9,6 +9,7 @@ const {
   secretInfo,
   loginUser,
 } = require("./controllers/userController");
+const { getFriendList } = require("./controllers/friendController");
 const { User } = require("./models/userModel");
 
 const verify = (req, res, next) => {
@@ -44,12 +45,6 @@ router.get("/auth-me/", verify, (req, res) => {
 router.post("/users/", postUser);
 router.post("/users/login", loginUser);
 
-router.get("/friends/", async (req, res) => {
-  const token = req.header("Bearer-Authorization");
-  const payload = jwt.decode(token);
-  const user = await User.findOne({ email: payload.email });
-
-  res.status(200).json(user.friends);
-});
+router.get("/friends/", getFriendList);
 
 module.exports = router;
