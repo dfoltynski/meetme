@@ -1,70 +1,83 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.main`
-  position: relative;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  background-color: #f4f4f4;
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f4f4;
 `;
 
 export const FormContainer = styled.div`
-  text-align: center;
-  margin: auto;
-  width: 40em;
-  min-height: 45em;
-  -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  background-color: white;
-  border-radius: 20px;
+    text-align: center;
+    margin: auto;
+    width: 40em;
+    min-height: 45em;
+    -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    background-color: white;
+    border-radius: 20px;
 
-  @media screen and (max-width: 1440px) {
-    font-size: 12px;
-  }
+    @media screen and (max-width: 1440px) {
+        font-size: 12px;
+    }
 
-  @media screen and (max-width: 425px) {
-    height: 100%;
-    border-radius: 0px;
-  }
+    @media screen and (max-width: 425px) {
+        height: 100%;
+        border-radius: 0px;
+    }
 `;
 
 export const Form = styled.form`
-  margin: auto;
-  width: 20em;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
+    margin: auto;
+    width: 20em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Input = styled.input`
-  margin: 0.5em 0;
-  padding: 0.5em 1em;
-  border: none;
-  border-bottom: 1px solid black;
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
+    border: none;
+    border-bottom: 1px solid black;
 `;
 
 export const Section = styled.section`
-  margin-top: 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+    margin-top: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `;
 
 export const DashboardSection = styled.section`
-  text-align: center;
-  margin: auto;
-  background-color: #ffffff;
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  width: 30em;
-  height: 35em;
+    text-align: center;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    width: 30em;
+    height: 35em;
 `;
 
 export const MessageContainer = styled(FormContainer)`
-  width: 20em;
-  height: 15em;
+    width: 20em;
+    height: 15em;
+`;
+
+export const FriendProfilePicture = styled.img`
+    border-radius: 100px;
+    width: 4em;
+    height: 4em;
+    object-fit: cover;
+`;
+
+export const FriendProfilePictureContainer = styled.div`
+    padding: 1em;
+    display: flex;
+    align-items: center;
 `;
