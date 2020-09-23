@@ -54,14 +54,31 @@ export const Section = styled.section`
 
 export const DashboardSection = styled.section`
     text-align: center;
-    margin: auto;
     background-color: #ffffff;
     border-radius: 10px;
     -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
     -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
     box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-    width: 30em;
-    height: 35em;
+    width: 20em;
+`;
+
+export const SpecificFriendLabel = styled.button`
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    display: flex;
+    padding: 0.5em;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        transition: 0.3s ease-in-out;
+        background-color: #dedede;
+    }
 `;
 
 export const MessageContainer = styled(FormContainer)`
@@ -71,8 +88,8 @@ export const MessageContainer = styled(FormContainer)`
 
 export const FriendProfilePicture = styled.img`
     border-radius: 100px;
-    width: 4em;
-    height: 4em;
+    width: 2.5em;
+    height: 2.5em;
     object-fit: cover;
 `;
 
