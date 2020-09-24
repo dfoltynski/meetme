@@ -51,17 +51,22 @@ const MessageBox = () => {
                 </div>
                 <div>
                     <div className="message__field" ref={messageFieldRef}>
-                        {messages.map((message, index) =>
+                        {/* {messages.map((message, index) =>
                             message.type === "my_message" ? (
-                                <div className="my_message" key={index}>
+                                <li className="my_message" key={index}>
                                     {message.message}
-                                </div>
+                                </li>
                             ) : (
-                                <div className="received_message" key={index}>
+                                <li className="received_message" key={index}>
                                     {message.message}
-                                </div>
+                                </li>
                             )
-                        )}
+                        )} */}
+                        {messages.map((message, index) => (
+                            <li className="received_message" key={index}>
+                                {message.message}
+                            </li>
+                        ))}
                     </div>
                     <div className="message__send__field">
                         {chatUser !== "Select a friend to talk to..." ? (
