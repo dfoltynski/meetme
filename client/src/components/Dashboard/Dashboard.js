@@ -9,84 +9,80 @@ import FriendsBox from "./FriendsBox";
 import MessageBox from "./MessageBox";
 
 import {
-    Wrapper,
-    DashboardSection,
-    Form,
-    MessageContainer,
-    FriendProfilePicture,
-    FriendProfilePictureContainer,
+  Wrapper,
+  DashboardSection,
+  Form,
+  MessageContainer,
+  FriendProfilePicture,
+  FriendProfilePictureContainer,
 } from "../styledcomponents";
 
 const socket = io("http://localhost:8080");
 
 const Dashboard = () => {
-    const [cookie, removeCookie] = useCookies();
-    const [friends, setFriends] = useState([]);
-    const [messages, setMessages] = useState([]);
+  const [cookie, removeCookie] = useCookies();
+  const [friends, setFriends] = useState([]);
 
-    const createImagePreview = (bufferArray) => {
-        Object.entries(bufferArray).map((friend) => {
-            let imgBinary = Array.prototype.map
-                .call(friend[1].picture.data, (ch) => {
-                    return String.fromCharCode(ch);
-                })
-                .join("");
-            setFriends((oldFriends) => [
-                ...oldFriends,
-                {
-                    name: friend[1].name,
-                    email: friend[0],
-                    img: btoa(imgBinary),
-                },
-            ]);
-        });
-    };
-
-    socket.on("send message", (sender, message, friend) => {
-        if (message) {
-            console.log(`${sender}: ${message}`);
-            console.log(`received ${friend}: ${message}`);
-            setMessages([...messages, { type: "received_message", message }]);
-            // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
-        }
+  const createImagePreview = (bufferArray) => {
+    Object.entries(bufferArray).map((friend) => {
+      let imgBinary = Array.prototype.map
+        .call(friend[1].picture.data, (ch) => {
+          return String.fromCharCode(ch);
+        })
+        .join("");
+      setFriends((oldFriends) => [
+        ...oldFriends,
+        {
+          name: friend[1].name,
+          email: friend[0],
+          img: btoa(imgBinary),
+        },
+      ]);
     });
+  };
 
-    useEffect(() => {
-        socket.emit("add user", cookie.email);
+  //   socket.on("send message", (sender, message, friend) => {
+  //     if (message) {
+  //       console.log(`${sender}: ${message}`);
+  //       console.log(`received ${friend}: ${message}`);
+  //       setMessages([...messages, { type: "received_message", message }]);
+  //       // messageFieldRef.current.scrollTop = messageFieldRef.current.scrollHeight;
+  //     }
+  //   });
 
-        const auth = async () => {
-            try {
-                let res = await axios.get("http://localhost:8080/v1/auth-me/", {
-                    headers: {
-                        "Bearer-Authorization": cookie.token,
-                    },
-                });
-                // console.log(res);
-                let friendsRes = await axios.get(
-                    "http://localhost:8080/v1/friends/",
-                    {
-                        headers: {
-                            "Bearer-Authorization": cookie.token,
-                        },
-                    }
-                );
-                createImagePreview(friendsRes.data);
-            } catch (err) {
-                removeCookie("token");
-                removeCookie("io");
-                removeCookie("email");
-                window.location = "/login";
-            }
-        };
-        auth();
-    }, []);
+  useEffect(() => {
+    socket.emit("add user", cookie.email);
 
-    return (
-        <Wrapper>
-            <FriendsBox friends={friends}></FriendsBox>
-            <MessageBox messages={messages}></MessageBox>
-        </Wrapper>
-    );
+    const auth = async () => {
+      try {
+        let res = await axios.get("http://localhost:8080/v1/auth-me/", {
+          headers: {
+            "Bearer-Authorization": cookie.token,
+          },
+        });
+        // console.log(res);
+        let friendsRes = await axios.get("http://localhost:8080/v1/friends/", {
+          headers: {
+            "Bearer-Authorization": cookie.token,
+          },
+        });
+        createImagePreview(friendsRes.data);
+      } catch (err) {
+        removeCookie("token");
+        removeCookie("io");
+        removeCookie("email");
+        window.location = "/login";
+      }
+    };
+    auth();
+  }, []);
+
+  return (
+    <Wrapper>
+      <FriendsBox friends={friends}></FriendsBox>
+      <MessageBox></MessageBox>
+    </Wrapper>
+  );
 };
 
 export default Dashboard;
