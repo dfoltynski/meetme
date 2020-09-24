@@ -98,3 +98,14 @@ export const FriendProfilePictureContainer = styled.div`
     display: flex;
     align-items: center;
 `;
+
+export const CloseMessageBox = styled.button`
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.5em;
+    right: 0;
+`;

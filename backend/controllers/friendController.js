@@ -27,7 +27,7 @@ exports.getFriendList = async (req, res) => {
         {}
     );
 
-    console.log(friendObject);
+    // console.log(friendObject);
 
     res.status(200).json(friendObject);
 };
