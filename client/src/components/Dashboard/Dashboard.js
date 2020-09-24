@@ -1,28 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import io from "socket.io-client";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaAngleRight } from "@fortawesome/free-solid-svg-icons";
 import "../../App.css";
 import FriendsBox from "./FriendsBox";
 import MessageBox from "./MessageBox";
 
-import {
-    Wrapper,
-    DashboardSection,
-    Form,
-    MessageContainer,
-    FriendProfilePicture,
-    FriendProfilePictureContainer,
-} from "../styledcomponents";
-
-// const socket = io("http://localhost:8080");
+import { Wrapper } from "../styledcomponents";
 
 const Dashboard = () => {
     const [cookie, removeCookie] = useCookies();
     const [friends, setFriends] = useState([]);
-    const [fetchedMessageInfo, setFetchedMessageInfo] = useState({});
 
     const createImagePreview = (bufferArray) => {
         Object.entries(bufferArray).map((friend) => {
@@ -42,28 +29,14 @@ const Dashboard = () => {
         });
     };
 
-    // socket.on("send message", (sender, message, friend) => {
-    //     if (message) {
-    //         // console.log(`${sender}: ${message}`);
-    //         // console.log(`received ${friend}: ${message}`);
-    //         message ? setFetchedMessageInfo({ message }) : null;
-    //         // setMessages([...messages, { type: "received_message", message }]);
-    //         // messageFieldRef.current.scrollTop =
-    //         //     messageFieldRef.current.scrollHeight;
-    //     }
-    // });
-
     useEffect(() => {
-        // socket.emit("add user", cookie.email);
-
         const auth = async () => {
             try {
-                let res = await axios.get("http://localhost:8080/v1/auth-me/", {
+                await axios.get("http://localhost:8080/v1/auth-me/", {
                     headers: {
                         "Bearer-Authorization": cookie.token,
                     },
                 });
-                // console.log(res);
                 let friendsRes = await axios.get(
                     "http://localhost:8080/v1/friends/",
                     {

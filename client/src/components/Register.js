@@ -157,6 +157,7 @@ function Register() {
                                 borderRadius: "10px",
                             }}
                             src={previewImage}
+                            alt="preview"
                         ></img>
                     ) : (
                         <Dropzone
