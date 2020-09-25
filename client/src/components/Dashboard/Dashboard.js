@@ -8,60 +8,57 @@ import MessageBox from "./MessageBox";
 import { Wrapper } from "../styledcomponents";
 
 const Dashboard = () => {
-    const [cookie, removeCookie] = useCookies();
-    const [friends, setFriends] = useState([]);
+  const [cookie, removeCookie] = useCookies();
+  const [friends, setFriends] = useState([]);
 
-    const createImagePreview = (bufferArray) => {
-        Object.entries(bufferArray).map((friend) => {
-            let imgBinary = Array.prototype.map
-                .call(friend[1].picture.data, (ch) => {
-                    return String.fromCharCode(ch);
-                })
-                .join("");
-            setFriends((oldFriends) => [
-                ...oldFriends,
-                {
-                    name: friend[1].name,
-                    email: friend[0],
-                    img: btoa(imgBinary),
-                },
-            ]);
+  const createImagePreview = (bufferArray) => {
+    Object.entries(bufferArray).map((friend) => {
+      let imgBinary = Array.prototype.map
+        .call(friend[1].picture.data, (ch) => {
+          return String.fromCharCode(ch);
+        })
+        .join("");
+      setFriends((oldFriends) => [
+        ...oldFriends,
+        {
+          name: friend[1].name,
+          email: friend[0],
+          img: btoa(imgBinary),
+        },
+      ]);
+    });
+  };
+
+  useEffect(() => {
+    const auth = async () => {
+      try {
+        await axios.get("http://localhost:8080/v1/auth-me/", {
+          headers: {
+            "Bearer-Authorization": cookie.token,
+          },
         });
+        let friendsRes = await axios.get("http://localhost:8080/v1/friends/", {
+          headers: {
+            "Bearer-Authorization": cookie.token,
+          },
+        });
+        createImagePreview(friendsRes.data);
+      } catch (err) {
+        removeCookie("token");
+        removeCookie("io");
+        removeCookie("email");
+        window.location = "/login";
+      }
     };
+    auth();
+  }, []);
 
-    useEffect(() => {
-        const auth = async () => {
-            try {
-                await axios.get("http://localhost:8080/v1/auth-me/", {
-                    headers: {
-                        "Bearer-Authorization": cookie.token,
-                    },
-                });
-                let friendsRes = await axios.get(
-                    "http://localhost:8080/v1/friends/",
-                    {
-                        headers: {
-                            "Bearer-Authorization": cookie.token,
-                        },
-                    }
-                );
-                createImagePreview(friendsRes.data);
-            } catch (err) {
-                removeCookie("token");
-                removeCookie("io");
-                removeCookie("email");
-                window.location = "/login";
-            }
-        };
-        auth();
-    }, []);
-
-    return (
-        <Wrapper>
-            <FriendsBox friends={friends}></FriendsBox>
-            <MessageBox></MessageBox>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <FriendsBox friends={friends}></FriendsBox>
+      <MessageBox></MessageBox>
+    </Wrapper>
+  );
 };
 
 export default Dashboard;
