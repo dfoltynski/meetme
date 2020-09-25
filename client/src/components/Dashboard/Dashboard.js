@@ -4,12 +4,25 @@ import { useCookies } from "react-cookie";
 import "../../App.css";
 import FriendsBox from "./FriendsBox";
 import MessageBox from "./MessageBox";
-
-import { Wrapper } from "../styledcomponents";
+import ReactMapGL, { GeolocateControl, NavigationControl } from "react-map-gl";
+import Geocoder from "react-mapbox-gl-geocoder";
 
 const Dashboard = () => {
   const [cookie, removeCookie] = useCookies();
   const [friends, setFriends] = useState([]);
+  const [viewport, setViewport] = useState({
+    width: "100vw",
+    height: "100vh",
+    latitude: 53.0,
+    longitude: 9.0,
+    zoom: 3,
+  });
+
+  const geolocateStyle = {
+    position: "absolute",
+    top: 0,
+    right: 0,
+  };
 
   const createImagePreview = (bufferArray) => {
     Object.entries(bufferArray).map((friend) => {
@@ -54,10 +67,39 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Wrapper>
+    <ReactMapGL
+      {...viewport}
+      onViewportChange={(nextViewport) => setViewport(nextViewport)}
+      mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
+      onViewportChange={(nextViewport) => setViewport(nextViewport)}
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: "5em",
+          zIndex: 1,
+        }}
+      >
+        <Geocoder
+          mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
+          viewport={viewport}
+          hideOnSelect={true}
+          limit={10}
+        />
+      </div>
+
+      <GeolocateControl
+        positionOptions={{ enableHighAccuracy: true }}
+        trackUserLocation={true}
+        style={geolocateStyle}
+      />
+      <div style={{ position: "absolute", right: 0, top: "3em" }}>
+        <NavigationControl />
+      </div>
       <FriendsBox friends={friends}></FriendsBox>
       <MessageBox></MessageBox>
-    </Wrapper>
+    </ReactMapGL>
   );
 };
 

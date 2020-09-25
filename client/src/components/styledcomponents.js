@@ -61,6 +61,7 @@ export const DashboardSection = styled.section`
   -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
   box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
   width: 20em;
+  padding: 0.5em;
 `;
 
 export const SpecificFriendLabel = styled.button`
