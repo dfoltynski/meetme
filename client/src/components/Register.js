@@ -11,6 +11,7 @@ import Dropzone from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+
 function Register() {
   const [selectedFile, setSelectedFile] = useState();
   const [previewImage, setPreviewImage] = useState("");
