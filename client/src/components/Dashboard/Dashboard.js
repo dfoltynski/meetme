@@ -4,13 +4,23 @@ import { useCookies } from "react-cookie";
 import "../../App.css";
 import FriendsBox from "./FriendsBox";
 import MessageBox from "./MessageBox";
-import ReactMapGL, { GeolocateControl, NavigationControl } from "react-map-gl";
+import Popup from "./Popup";
+import ReactMapGL, {
+    GeolocateControl,
+    NavigationControl,
+    Marker,
+} from "react-map-gl";
 import Geocoder from "react-mapbox-gl-geocoder";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = () => {
     const [cookie, removeCookie] = useCookies();
     const [friends, setFriends] = useState([]);
-    const [lngLat, setLngLat] = useState([]);
+    const [lngLat, setLngLat] = useState({});
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
     const [viewport, setViewport] = useState({
         width: "100vw",
         height: "100vh",
@@ -70,42 +80,75 @@ const Dashboard = () => {
         auth();
     }, []);
 
+    const createPopup = (e) => {
+        const [longitude, latitude] = e.lngLat;
+        setLngLat({ longitude, latitude });
+        setShowPopup(!showPopup);
+        console.log(e.center);
+        console.log(e);
+    };
+
     return (
         <ReactMapGL
             {...viewport}
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
             mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
-            onDblClick={(e) => console.log(e)}
+            onDblClick={(e) => createPopup(e)}
+            onLoad={(e) => setIsLoaded(true)}
         >
-            <div
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    width: "100vw",
-                    display: "flex",
-                    justifyContent: "center",
-                    zIndex: 1,
-                }}
-            >
-                <Geocoder
-                    mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
-                    viewport={viewport}
-                    hideOnSelect={true}
-                    limit={10}
-                    onSelected={(viewport) => setViewport(viewport)}
-                />
-            </div>
+            {isLoaded ? (
+                <div>
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            width: "100vw",
+                            display: "flex",
+                            justifyContent: "center",
+                            zIndex: 1,
+                        }}
+                    >
+                        <Geocoder
+                            mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
+                            viewport={viewport}
+                            hideOnSelect={true}
+                            limit={10}
+                            onSelected={(viewport) => setViewport(viewport)}
+                        />
+                    </div>
 
-            <GeolocateControl
-                positionOptions={{ enableHighAccuracy: true }}
-                trackUserLocation={true}
-                style={geolocateStyle}
-            />
-            <div style={{ position: "absolute", right: 0, top: "3em" }}>
-                <NavigationControl />
-            </div>
-            <FriendsBox friends={friends}></FriendsBox>
-            <MessageBox></MessageBox>
+                    <GeolocateControl
+                        positionOptions={{ enableHighAccuracy: true }}
+                        trackUserLocation={true}
+                        style={geolocateStyle}
+                    />
+                    <div style={{ position: "absolute", right: 0, top: "3em" }}>
+                        <NavigationControl />
+                    </div>
+                    <FriendsBox friends={friends}></FriendsBox>
+                    <MessageBox></MessageBox>
+                    {showPopup ? (
+                        <Marker
+                            latitude={lngLat.latitude}
+                            longitude={lngLat.longitude}
+                            offsetLeft={-10}
+                            offsetTop={-20}
+                        >
+                            <Popup></Popup>
+                            <FontAwesomeIcon
+                                icon={faMapMarkerAlt}
+                                color="#6400fa"
+                                style={{
+                                    height: `${4 * viewport.zoom}px`,
+                                    width: `${4 * viewport.zoom}px`,
+                                }}
+                            />
+                        </Marker>
+                    ) : null}
+                </div>
+            ) : (
+                <h1>Loading</h1>
+            )}
         </ReactMapGL>
     );
 };

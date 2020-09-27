@@ -130,3 +130,11 @@ export const LogoutButton = styled.button`
         background-color: #d93c36;
     }
 `;
+
+export const PopupForm = styled.form`
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+`;
