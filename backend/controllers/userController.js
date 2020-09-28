@@ -31,7 +31,12 @@ exports.loginUser = async (req, res) => {
     const token = generateToken(user);
 
     res.header("Bearer-Authorization", token);
-    res.status(200).json({ message: "zalogowan", token, name: user.name });
+    res.status(200).json({
+      message: "zalogowan",
+      token,
+      name: user.name,
+      profile_pic: user.profile_pic,
+    });
   } else {
     res.status(401).json("there is no such a user in database");
   }
@@ -98,7 +103,6 @@ exports.postUser = (req, res) => {
 
       let imageData = fs.readFileSync(req.file.path);
 
-      // i done it that way cus email is not defined'
       const validatedData = await registerValidationSchema.validateAsync({
         email: req.body.email,
         password: req.body.password,

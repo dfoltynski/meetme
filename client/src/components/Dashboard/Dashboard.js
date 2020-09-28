@@ -11,6 +11,8 @@ import ReactMapGL, {
   Marker,
 } from "react-map-gl";
 import Geocoder from "react-mapbox-gl-geocoder";
+import { setUserEmail, setUserName, setUserToken } from "../../actions";
+import { useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +31,7 @@ const Dashboard = () => {
     zoom: 3,
   });
 
+  const dispatch = useDispatch();
   const geolocateStyle = {
     position: "absolute",
     top: 0,
@@ -67,6 +70,9 @@ const Dashboard = () => {
           },
         });
         createImagePreview(friendsRes.data);
+        dispatch(setUserToken(cookie.token));
+        dispatch(setUserEmail(cookie.email));
+        dispatch(setUserName(cookie.name));
       } catch (err) {
         removeCookie("token");
         removeCookie("io");
@@ -132,15 +138,17 @@ const Dashboard = () => {
               offsetLeft={-10}
               offsetTop={-20}
             >
-              <Popup user={cookie.name}></Popup>
-              <FontAwesomeIcon
-                icon={faMapMarkerAlt}
-                color="#6400fa"
-                style={{
-                  height: `${4 * viewport.zoom}px`,
-                  width: `${4 * viewport.zoom}px`,
-                }}
-              />
+              <div>
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  color="#6400fa"
+                  style={{
+                    height: `${4 * viewport.zoom}px`,
+                    width: `${4 * viewport.zoom}px`,
+                  }}
+                />
+                <Popup user={cookie.name}></Popup>
+              </div>
             </Marker>
           ) : null}
         </div>

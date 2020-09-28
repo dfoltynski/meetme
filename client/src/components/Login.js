@@ -43,15 +43,13 @@ const Login = () => {
             "Bearer-Authorization": res.data.token,
           },
         });
+        console.log(res.data.profile_pic);
         let d = new Date();
         d.setTime(d.getTime() + 30 * 60 * 1000);
         setCookie("token", res.data.token, { expires: d });
         setCookie("email", values.email, { expires: d });
         setCookie("name", res.data.name, { expires: d });
 
-        dispatch(setUserToken(res.data.token));
-        dispatch(setUserEmail(values.email));
-        dispatch(setUserName(res.data.name));
         setUserError(null);
         if (authMe.status === 200 || authMe.status === 304) {
           window.location = "/dashboard";
