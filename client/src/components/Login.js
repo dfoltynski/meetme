@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { setUserEmail, setUserName, setUserToken } from "../actions";
 
 import { Wrapper, FormContainer, Form, Input } from "./styledcomponents";
 
 const Login = () => {
   const [userError, setUserError] = useState("");
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+  const dispatch = useDispatch();
 
   const validate = (values) => {
     const errors = {};
@@ -30,21 +33,27 @@ const Login = () => {
     validate,
     onSubmit: async (values) => {
       try {
-        const token = await axios.post(
+        const res = await axios.post(
           "http://localhost:8080/v1/users/login/",
           values
         );
-        let d = new Date();
-        d.setTime(d.getTime() + 30 * 60 * 1000);
-        setCookie("token", token.data.token, { expires: d });
-        setCookie("email", values.email, { expires: d });
-        setUserError(null);
-        const res = await axios.get("http://localhost:8080/v1/auth-me/", {
+
+        const authMe = await axios.get("http://localhost:8080/v1/auth-me/", {
           headers: {
-            "Bearer-Authorization": token.data.token,
+            "Bearer-Authorization": res.data.token,
           },
         });
-        if (res.status === 200) {
+        let d = new Date();
+        d.setTime(d.getTime() + 30 * 60 * 1000);
+        setCookie("token", res.data.token, { expires: d });
+        setCookie("email", values.email, { expires: d });
+        setCookie("name", res.data.name, { expires: d });
+
+        dispatch(setUserToken(res.data.token));
+        dispatch(setUserEmail(values.email));
+        dispatch(setUserName(res.data.name));
+        setUserError(null);
+        if (authMe.status === 200 || authMe.status === 304) {
           window.location = "/dashboard";
         }
       } catch (err) {

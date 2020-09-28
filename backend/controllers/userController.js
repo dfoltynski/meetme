@@ -29,8 +29,9 @@ exports.loginUser = async (req, res) => {
 
   if (await bcrypt.compare(password, user.password)) {
     const token = generateToken(user);
+
     res.header("Bearer-Authorization", token);
-    res.status(200).json({ message: "zalogowan", token });
+    res.status(200).json({ message: "zalogowan", token, name: user.name });
   } else {
     res.status(401).json("there is no such a user in database");
   }
@@ -124,7 +125,6 @@ exports.postUser = (req, res) => {
         friends: ["dawid@dawid.com", "dawid2@dawid.com"],
         sex,
       });
-
 
       userPic.save();
       user.save();

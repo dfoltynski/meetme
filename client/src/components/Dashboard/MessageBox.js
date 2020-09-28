@@ -8,6 +8,7 @@ const MessageBox = () => {
   const [cookie, removeCookie] = useCookies();
 
   const chatUser = useSelector((state) => state.chatUser);
+  const chatUsername = useSelector((state) => state.chatUsername);
   const chatRef = useRef();
 
   const [messages, setMessages] = useState([]);
@@ -51,7 +52,7 @@ const MessageBox = () => {
     <div className="toggle__chat" ref={chatRef}>
       <div className="message__conteiner">
         <div className="message__topbar">
-          <div className="message__user">{chatUser}</div>
+          <div className="message__user">{chatUsername}</div>
         </div>
         <div>
           <div className="message__field" ref={messageFieldRef}>
@@ -77,7 +78,7 @@ const MessageBox = () => {
             )} */}
           </div>
           <div className="message__send__field">
-            {chatUser !== "Select a friend to talk to..." ? (
+            {chatUsername !== "Select a friend to talk to..." ? (
               <form onSubmit={sendMessage}>
                 <input
                   type="text"
