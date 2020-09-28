@@ -2,26 +2,28 @@
     display: none;
 } */
 
-.message__conteiner {
+.message__container {
     position: absolute;
     bottom: 0;
-    right: 1em;
+    right: 20em;
     width: 18em;
     height: 21em;
     border-radius: 10px 10px 0 0;
     -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
     -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
     box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    cursor: default;
 }
 
 .message__topbar {
     border-radius: 10px 10px 0 0;
     text-align: center;
     background-color: #6400fa;
-    height: 2.8em;
+    height: 3em;
     color: white;
     font-weight: bold;
     display: flex;
+    align-items: center;
 }
 
 .my_message {
@@ -51,7 +53,8 @@
 }
 
 .message__user {
-    margin: auto;
+    /* margin: auto; */
+    margin: 0 0.2em;
 }
 
 .message__field {
@@ -143,4 +146,15 @@ input[type="text"] {
 
 input {
     outline: none;
+}
+
+.message__friend_avatar {
+    object-fit: cover;
+    border-radius: 100px;
+    width: 2.2em;
+    height: 2.2em;
+}
+
+.message__topbar__friend_info {
+    margin: 0.5em;
 }

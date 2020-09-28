@@ -4,13 +4,15 @@ import setUserName from "./setUserName";
 import setUserToken from "./setUserToken";
 import { combineReducers } from "redux";
 import setChatUsername from "./setChatUsername";
+import setFriendPicture from "./setFriendPicture";
 
 const allReducers = combineReducers({
-  chatUser: setChatUser,
-  chatUsername: setChatUsername,
-  userEmail: setUserEmail,
-  userName: setUserName,
-  token: setUserToken,
+    chatUser: setChatUser,
+    chatUsername: setChatUsername,
+    friendPicture: setFriendPicture,
+    userEmail: setUserEmail,
+    userName: setUserName,
+    token: setUserToken,
 });
 
 export default allReducers;
