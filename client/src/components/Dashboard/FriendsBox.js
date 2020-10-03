@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { setChatUser, setChatUsername, setFriendPicture } from "../../actions";

@@ -5,6 +5,7 @@ import setUserToken from "./setUserToken";
 import { combineReducers } from "redux";
 import setChatUsername from "./setChatUsername";
 import setFriendPicture from "./setFriendPicture";
+import setShowPopup from "./setShowPopup";
 
 const allReducers = combineReducers({
     chatUser: setChatUser,
@@ -12,6 +13,7 @@ const allReducers = combineReducers({
     friendPicture: setFriendPicture,
     userEmail: setUserEmail,
     userName: setUserName,
+    showPopup: setShowPopup,
     token: setUserToken,
 });
 

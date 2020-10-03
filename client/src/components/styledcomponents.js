@@ -135,6 +135,7 @@ export const LogoutButton = styled.button`
 `;
 
 export const PopupForm = styled.form`
+    position: relative;
     background-color: #fff;
     padding: 1em;
     border-radius: 10px;

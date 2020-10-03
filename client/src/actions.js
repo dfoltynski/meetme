@@ -27,3 +27,7 @@ export const setUserName = (username) => {
 export const setFriendPicture = (friend_avatar) => {
     return { type: "SET_FRIEND_PICTURE", payload: { friend_avatar } };
 };
+
+export const setShowPopup = (showPopup) => {
+    return { type: "SET_SHOW_POPUP", payload: { showPopup } };
+};
