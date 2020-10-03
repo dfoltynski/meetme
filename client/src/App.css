@@ -3,6 +3,7 @@
 } */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 
 body {
     scroll-behavior: smooth;
@@ -261,4 +262,61 @@ input {
     width: 40rem;
     height: 35rem;
     margin: 5rem;
+}
+
+.validation__error {
+    color: red;
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: bold;
+    margin: 0;
+}
+
+.sex__checkbox {
+    font-family: Roboto;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0 0.37em;
+    padding-left: 1em;
+}
+
+.sex__checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 16%;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    background-color: #c4c4c4;
+    border-radius: 100px;
+}
+
+.sex__checkbox:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.sex__checkbox input:checked ~ .checkmark {
+    background-color: #875ae6;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.sex__checkbox input:checked ~ .checkmark:after {
+    display: block;
 }

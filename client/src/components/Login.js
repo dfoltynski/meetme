@@ -3,35 +3,36 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { setUserEmail, setUserName, setUserToken } from "../actions";
+import * as Yup from "yup";
 
-import { Wrapper, FormContainer, Form, Input } from "./styledcomponents";
+import {
+    Wrapper,
+    FormContainer,
+    Form,
+    Input,
+    SubmitForm,
+} from "./styledcomponents";
+
+import "../App.css";
+
+const validationSchema = Yup.object({
+    email: Yup.string().email("Invalid email address"),
+    password: Yup.string()
+        .required("Required")
+        .min(3, "Password length must be greater than 3"),
+});
 
 const Login = () => {
     const [userError, setUserError] = useState("");
     const [cookie, setCookie, removeCookie] = useCookies(["token"]);
-    const dispatch = useDispatch();
-
-    const validate = (values) => {
-        const errors = {};
-
-        if (values.password.length < 3) {
-            errors.password = "Password length must be greater than 3";
-        } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-        ) {
-            errors.email = "Invalid email address";
-        }
-
-        return errors;
-    };
 
     const formik = useFormik({
         initialValues: {
             email: "",
             password: "",
         },
-        validate,
+        validateOnChange: false,
+        validationSchema,
         onSubmit: async (values) => {
             try {
                 const res = await axios.post(
@@ -54,6 +55,7 @@ const Login = () => {
                 setCookie("name", res.data.name, { expires: d });
 
                 setUserError(null);
+                console.log(authMe.status);
                 if (authMe.status === 200 || authMe.status === 304) {
                     window.location = "/dashboard";
                 }
@@ -73,12 +75,12 @@ const Login = () => {
                 <h1>Login</h1>
                 <Form onSubmit={formik.handleSubmit}>
                     {userError ? (
-                        <p style={{ color: "red", fontSize: "14px" }}>
+                        <p className="validation__error" style={{}}>
                             {userError}
                         </p>
                     ) : null}
                     <Input
-                        id="email"
+                        name="email"
                         type="text"
                         placeholder="email"
                         onChange={formik.handleChange}
@@ -86,12 +88,12 @@ const Login = () => {
                         required
                     />
                     {formik.errors.email ? (
-                        <p style={{ color: "#ed2d4d", fontSize: "14px" }}>
+                        <p className="validation__error">
                             {formik.errors.email}
                         </p>
                     ) : null}
                     <Input
-                        id="password"
+                        name="password"
                         type="password"
                         placeholder="password"
                         onChange={formik.handleChange}
@@ -99,23 +101,11 @@ const Login = () => {
                         required
                     />
                     {formik.errors.password ? (
-                        <p style={{ color: "red", fontSize: "14px" }}>
+                        <p className="validation__error">
                             {formik.errors.password}
                         </p>
                     ) : null}
-                    <Input
-                        type="submit"
-                        value="Log in"
-                        style={{
-                            backgroundColor: "#6400fa",
-                            color: "white",
-                            border: "none",
-                            padding: "1em",
-                            cursor: "pointer",
-                            borderRadius: "10px",
-                            fontWeight: "bolder",
-                        }}
-                    ></Input>
+                    <SubmitForm type="submit" value="Log in"></SubmitForm>
                 </Form>
             </FormContainer>
         </Wrapper>

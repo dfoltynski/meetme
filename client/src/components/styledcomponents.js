@@ -41,7 +41,7 @@ export const Form = styled.form`
 export const Input = styled.input`
     margin: 0.5em 0;
     padding: 0.5em 1em;
-    border: 2px solid gray;
+    border: 2px solid rgba(0, 0, 0, 0.22);
     border-radius: 10px;
     background-color: #fff;
     transition: 0.2s ease-in-out;
@@ -49,6 +49,29 @@ export const Input = styled.input`
     &:focus {
         transition: 0.2s ease-in-out;
         border-color: rgba(135, 90, 229, 0.6);
+        box-shadow: 0px 0px 28px -3px rgba(135, 90, 229, 0.6);
+    }
+`;
+
+export const SubmitForm = styled.input`
+    border-radius: 10px;
+    margin: 0.5em 0;
+    padding: 1em 1.5em;
+    border: none;
+    background-color: #875ae5;
+    color: white;
+    border: none;
+    /* padding: 1em; */
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bolder;
+    box-shadow: 0px 0px 28px -3px rgba(0, 0, 0, 0.25);
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #7440e3;
+        transition: 0.2s ease-in-out;
     }
 `;
 
