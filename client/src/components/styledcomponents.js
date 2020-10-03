@@ -41,8 +41,15 @@ export const Form = styled.form`
 export const Input = styled.input`
     margin: 0.5em 0;
     padding: 0.5em 1em;
-    border: none;
-    border-bottom: 1px solid black;
+    border: 2px solid gray;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: 0.2s ease-in-out;
+
+    &:focus {
+        transition: 0.2s ease-in-out;
+        border-color: rgba(135, 90, 229, 0.6);
+    }
 `;
 
 export const Section = styled.section`
@@ -183,4 +190,19 @@ export const SubmitMeet = styled.input`
         background-color: #4e02bf;
         transition: 0.2s ease-in-out;
     }
+`;
+
+export const WelcomePage = styled.main`
+    position: relative;
+    text-align: center;
+    display: flex;
+    height: 100vh;
+    background-image: url(${(props) => props.bg});
+    background-size: cover;
+`;
+
+export const ShowoffPage = styled.section`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 `;

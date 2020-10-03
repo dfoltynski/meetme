@@ -16,8 +16,15 @@ const Popup = () => {
         dispatch(setShowPopup(false));
     };
 
+    const submitPopup = () => {
+        console.log(
+            "post form data to database, and emit it from socket to make it realtime"
+        );
+        closePopup();
+    };
+
     return (
-        <PopupForm>
+        <PopupForm onSubmit={submitPopup}>
             <div
                 onClick={closePopup}
                 style={{
@@ -36,7 +43,7 @@ const Popup = () => {
                 placeholder="Write why you want to meet..."
             />
             <div style={{ display: "block" }}>
-                <SubmitMeet value="Send meet" />
+                <SubmitMeet type="submit" value="Send meet" />
             </div>
         </PopupForm>
     );

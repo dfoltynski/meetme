@@ -8,113 +8,118 @@ import { setUserEmail, setUserName, setUserToken } from "../actions";
 import { Wrapper, FormContainer, Form, Input } from "./styledcomponents";
 
 const Login = () => {
-  const [userError, setUserError] = useState("");
-  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
-  const dispatch = useDispatch();
+    const [userError, setUserError] = useState("");
+    const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+    const dispatch = useDispatch();
 
-  const validate = (values) => {
-    const errors = {};
+    const validate = (values) => {
+        const errors = {};
 
-    if (values.password.length < 3) {
-      errors.password = "Password length must be greater than 3";
-    }
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = "Invalid email address";
-    }
-
-    return errors;
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validate,
-    onSubmit: async (values) => {
-      try {
-        const res = await axios.post(
-          "http://localhost:8080/v1/users/login/",
-          values
-        );
-
-        const authMe = await axios.get("http://localhost:8080/v1/auth-me/", {
-          headers: {
-            "Bearer-Authorization": res.data.token,
-          },
-        });
-        console.log(res.data.profile_pic);
-        let d = new Date();
-        d.setTime(d.getTime() + 30 * 60 * 1000);
-        setCookie("token", res.data.token, { expires: d });
-        setCookie("email", values.email, { expires: d });
-        setCookie("name", res.data.name, { expires: d });
-
-        setUserError(null);
-        if (authMe.status === 200 || authMe.status === 304) {
-          window.location = "/dashboard";
+        if (values.password.length < 3) {
+            errors.password = "Password length must be greater than 3";
+        } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+        ) {
+            errors.email = "Invalid email address";
         }
-      } catch (err) {
-        console.log("Error: ", err);
-        setUserError("Invalid email or password");
-        removeCookie("token");
-        removeCookie("io");
-        removeCookie("email");
-      }
-    },
-  });
 
-  return (
-    <Wrapper>
-      <FormContainer style={{ minHeight: "11em" }}>
-        <h1>Login</h1>
-        <Form onSubmit={formik.handleSubmit}>
-          {userError ? (
-            <p style={{ color: "red", fontSize: "14px" }}>{userError}</p>
-          ) : null}
-          <Input
-            id="email"
-            type="text"
-            placeholder="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            required
-          />
-          {formik.errors.email ? (
-            <p style={{ color: "red", fontSize: "14px" }}>
-              {formik.errors.email}
-            </p>
-          ) : null}
-          <Input
-            id="password"
-            type="password"
-            placeholder="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            required
-          />
-          {formik.errors.password ? (
-            <p style={{ color: "red", fontSize: "14px" }}>
-              {formik.errors.password}
-            </p>
-          ) : null}
-          <Input
-            type="submit"
-            value="Log in"
-            style={{
-              backgroundColor: "#6400fa",
-              color: "white",
-              border: "none",
-              padding: "1em",
-              cursor: "pointer",
-              borderRadius: "10px",
-              fontWeight: "bolder",
-            }}
-          ></Input>
-        </Form>
-      </FormContainer>
-    </Wrapper>
-  );
+        return errors;
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validate,
+        onSubmit: async (values) => {
+            try {
+                const res = await axios.post(
+                    "http://localhost:8080/v1/users/login/",
+                    values
+                );
+
+                const authMe = await axios.get(
+                    "http://localhost:8080/v1/auth-me/",
+                    {
+                        headers: {
+                            "Bearer-Authorization": res.data.token,
+                        },
+                    }
+                );
+                let d = new Date();
+                d.setTime(d.getTime() + 30 * 60 * 1000);
+                setCookie("token", res.data.token, { expires: d });
+                setCookie("email", values.email, { expires: d });
+                setCookie("name", res.data.name, { expires: d });
+
+                setUserError(null);
+                if (authMe.status === 200 || authMe.status === 304) {
+                    window.location = "/dashboard";
+                }
+            } catch (err) {
+                console.log("Error: ", err);
+                setUserError("Invalid email or password");
+                removeCookie("token");
+                removeCookie("io");
+                removeCookie("email");
+            }
+        },
+    });
+
+    return (
+        <Wrapper>
+            <FormContainer style={{ minHeight: "11em" }}>
+                <h1>Login</h1>
+                <Form onSubmit={formik.handleSubmit}>
+                    {userError ? (
+                        <p style={{ color: "red", fontSize: "14px" }}>
+                            {userError}
+                        </p>
+                    ) : null}
+                    <Input
+                        id="email"
+                        type="text"
+                        placeholder="email"
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
+                        required
+                    />
+                    {formik.errors.email ? (
+                        <p style={{ color: "#ed2d4d", fontSize: "14px" }}>
+                            {formik.errors.email}
+                        </p>
+                    ) : null}
+                    <Input
+                        id="password"
+                        type="password"
+                        placeholder="password"
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        required
+                    />
+                    {formik.errors.password ? (
+                        <p style={{ color: "red", fontSize: "14px" }}>
+                            {formik.errors.password}
+                        </p>
+                    ) : null}
+                    <Input
+                        type="submit"
+                        value="Log in"
+                        style={{
+                            backgroundColor: "#6400fa",
+                            color: "white",
+                            border: "none",
+                            padding: "1em",
+                            cursor: "pointer",
+                            borderRadius: "10px",
+                            fontWeight: "bolder",
+                        }}
+                    ></Input>
+                </Form>
+            </FormContainer>
+        </Wrapper>
+    );
 };
 
 export default Login;

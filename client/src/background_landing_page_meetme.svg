@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" fill="none" viewBox="0 0 1920 1080">
+  <g filter="url(#filter0_i)">
+    <path fill="#6400FA" fill-rule="evenodd" d="M1920 1080l-80-86c-80-86-240-259-400-269-160-9-320 144-480 163-160 20-320-96-480-134s-320 0-400 19L0 792V562h1920v518z" clip-rule="evenodd"/>
+    <path fill="url(#paint0_linear)" fill-rule="evenodd" d="M1920 1080l-80-86c-80-86-240-259-400-269-160-9-320 144-480 163-160 20-320-96-480-134s-320 0-400 19L0 792V562h1920v518z" clip-rule="evenodd"/>
+    <path fill="#6400FA" d="M0 562h1920V.5H0V562z"/>
+    <path fill="url(#paint1_linear)" d="M0 562h1920V.5H0V562z"/>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear" x1="960" x2="960" y1="1080" y2=".5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6400FA"/>
+      <stop offset="1" stop-color="#4C00BD"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="960" x2="960" y1="1080" y2=".5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6400FA"/>
+      <stop offset="1" stop-color="#4C00BD"/>
+    </linearGradient>
+    <filter id="filter0_i" width="1920" height="1087.5" x="0" y="-7.5" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+      <feOffset dy="-8"/>
+      <feGaussianBlur stdDeviation="16.5"/>
+      <feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"/>
+      <feBlend in2="shape" result="effect1_innerShadow"/>
+    </filter>
+  </defs>
+</svg>
