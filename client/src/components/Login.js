@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 
 import {
@@ -106,6 +106,17 @@ const Login = () => {
                         </p>
                     ) : null}
                     <SubmitForm type="submit" value="Log in"></SubmitForm>
+                    <Link
+                        style={{
+                            color: "#787878",
+                            fontFamily: "Poppins",
+                            fontSize: "13px",
+                        }}
+                        to="/register"
+                    >
+                        Don't have an account? <br />
+                        Register
+                    </Link>
                 </Form>
             </FormContainer>
         </Wrapper>

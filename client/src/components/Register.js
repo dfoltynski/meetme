@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
     Wrapper,
     Form,
     Input,
     FormContainer,
     Section,
+    SubmitForm,
 } from "./styledcomponents";
 import { useFormik } from "formik";
 import Dropzone from "react-dropzone";
@@ -184,19 +186,18 @@ function Register() {
                             )}
                         </Dropzone>
                     )}
-                    <Input
-                        type="submit"
-                        value="Register"
+                    <SubmitForm type="submit" value="Register"></SubmitForm>
+                    <Link
                         style={{
-                            backgroundColor: "#6400fa",
-                            color: "white",
-                            border: "none",
-                            padding: "1em",
-                            cursor: "pointer",
-                            borderRadius: "10px",
-                            fontWeight: "bolder",
+                            color: "#787878",
+                            fontFamily: "Poppins",
+                            fontSize: "13px",
                         }}
-                    ></Input>
+                        to="/login"
+                    >
+                        or <br />
+                        Log in
+                    </Link>
                 </Form>
             </FormContainer>
         </Wrapper>
