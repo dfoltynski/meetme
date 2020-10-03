@@ -141,26 +141,26 @@ const Dashboard = () => {
                     </div>
                     <FriendsBox friends={friends}></FriendsBox>
                     <MessageBox></MessageBox>
-                    {showPopup ? (
-                        <Marker
-                            latitude={lngLat.latitude}
-                            longitude={lngLat.longitude}
-                            offsetLeft={-10}
-                            offsetTop={-20}
-                        >
-                            <div>
-                                <FontAwesomeIcon
-                                    icon={faMapMarkerAlt}
-                                    color="#6400fa"
-                                    style={{
-                                        height: `${4 * viewport.zoom}px`,
-                                        width: `${4 * viewport.zoom}px`,
-                                    }}
-                                />
-                                <Popup user={cookie.name}></Popup>
-                            </div>
-                        </Marker>
-                    ) : null}
+                    {/* {showPopup ? ( */}
+                    <Marker
+                        latitude={52.06440436369671}
+                        longitude={18.316406250002405}
+                        offsetLeft={-10}
+                        offsetTop={-20}
+                    >
+                        <div>
+                            <FontAwesomeIcon
+                                icon={faMapMarkerAlt}
+                                color="#6400fa"
+                                style={{
+                                    height: `${4 * viewport.zoom}px`,
+                                    width: `${4 * viewport.zoom}px`,
+                                }}
+                            />
+                            <Popup user={cookie.name}></Popup>
+                        </div>
+                    </Marker>
+                    {/* ) : null} */}
                 </div>
             ) : (
                 <h1>Loading</h1>

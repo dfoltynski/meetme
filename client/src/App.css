@@ -265,7 +265,7 @@ input {
 }
 
 .validation__error {
-    color: red;
+    color: #f54242;
     font-size: 14px;
     font-family: Roboto;
     font-weight: bold;

@@ -148,7 +148,7 @@ export const CloseMessageBox = styled.button`
 `;
 
 export const LogoutButton = styled.button`
-    background-color: #f54842;
+    background-color: #f54242;
     border: none;
     outline: none;
     cursor: pointer;
