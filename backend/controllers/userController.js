@@ -31,11 +31,15 @@ exports.loginUser = async (req, res) => {
             const token = generateToken(user);
 
             res.header("Bearer-Authorization", token);
+            const profile_pic = await userProfilePicture.findById(
+                user.profile_pic
+            );
+            console.log(profile_pic.data.buffer);
             res.status(200).json({
                 message: "zalogowan",
                 token,
                 name: user.name,
-                profile_pic: user.profile_pic,
+                profile_pic: profile_pic.data,
             });
         } else {
             res.status(401).json("incorrect email or password");

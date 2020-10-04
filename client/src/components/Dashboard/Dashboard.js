@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
-const Dashboard = () => {
+const Dashboard = ({ userProfilePic }) => {
     const [cookie, removeCookie] = useCookies();
     const [friends, setFriends] = useState([]);
     const [lngLat, setLngLat] = useState({});
@@ -45,6 +45,7 @@ const Dashboard = () => {
 
     const createImagePreview = (bufferArray) => {
         Object.entries(bufferArray).map((friend) => {
+            console.log(friend[1].picture.data);
             let imgBinary = Array.prototype.map
                 .call(friend[1].picture.data, (ch) => {
                     return String.fromCharCode(ch);
@@ -62,6 +63,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
+        // console.log(userProfilePic);
         const auth = async () => {
             try {
                 await axios.get("http://localhost:8080/v1/auth-me/", {
@@ -77,6 +79,7 @@ const Dashboard = () => {
                         },
                     }
                 );
+                console.log(friendsRes.data);
                 createImagePreview(friendsRes.data);
                 dispatch(setUserToken(cookie.token));
                 dispatch(setUserEmail(cookie.email));

@@ -4,6 +4,9 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserProfilePic } from "../actions";
+import { useHistory } from "react-router-dom";
 
 import {
     Wrapper,
@@ -25,6 +28,19 @@ const validationSchema = Yup.object({
 const Login = () => {
     const [userError, setUserError] = useState("");
     const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+    const dispatch = useDispatch();
+    const profile_pic = useSelector((state) => state.profile_pic);
+    const history = useHistory();
+
+    const createImagePreview = async (bufferArray) => {
+        let imgBinary = Array.prototype.map
+            .call(bufferArray, (ch) => {
+                return String.fromCharCode(ch);
+            })
+            .join("");
+
+        return btoa(imgBinary);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -54,13 +70,21 @@ const Login = () => {
                 setCookie("email", values.email, { expires: d });
                 setCookie("name", res.data.name, { expires: d });
 
+                console.log(
+                    await createImagePreview(res.data.profile_pic.data)
+                );
+
                 setUserError(null);
-                console.log(authMe.status);
+                let imageBase64 = await createImagePreview(
+                    res.data.profile_pic.data
+                );
+                localStorage.setItem("profile_pic", imageBase64);
+                // dispatch(setUserProfilePic(imageBase64));
                 if (authMe.status === 200 || authMe.status === 304) {
-                    window.location = "/dashboard";
+                    history.push("/dashboard");
                 }
             } catch (err) {
-                console.log("Error: ", err);
+                console.error("Error: ", err);
                 setUserError("Invalid email or password");
                 removeCookie("token");
                 removeCookie("io");

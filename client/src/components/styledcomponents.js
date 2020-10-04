@@ -175,30 +175,46 @@ export const PopupForm = styled.form`
 `;
 
 export const Username = styled.input`
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    padding: 0.5em;
+    display: inline-block;
+    font-weight: bold;
     text-align: center;
-    font-size: 16px;
-    margin: 0.3em 0;
+    font-size: 20px;
+    padding: 0.5em 1em;
+    width: 5em;
+    height: 0.5em;
+    background: #ffffff;
+    border: 2px solid #875ae5;
+    box-shadow: 0px 0px 28px 3px rgba(135, 90, 229, 0.25);
+    border-radius: 12px;
 `;
 
 export const MeetInfoBox = styled.textarea`
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    width: 20em;
+    margin: 1em;
+    background: #ffffff;
+    border: 3px solid rgba(0, 0, 0, 0.22);
     height: 15em;
     padding: 0.5em;
-    margin: 0.3em 0;
+    resize: none;
+    width: 20em;
+    border-radius: 12px;
+    outline: none;
+    transition: 0.2s ease-in-out;
+
+    &:focus {
+        transition: 0.2s ease-in-out;
+        border: 3px solid #875ae5;
+        box-shadow: 0px 0px 28px 3px rgba(135, 90, 229, 0.25);
+    }
 `;
 
 export const SubmitMeet = styled.input`
-    background-color: #6400fa;
-    border-radius: 10px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    background: #875ae5;
+    box-shadow: 0px 0px 28px -3px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+
     border: none;
     outline: none;
     color: white;
@@ -210,7 +226,7 @@ export const SubmitMeet = styled.input`
     transition: 0.2s ease-in-out;
 
     &:hover {
-        background-color: #4e02bf;
+        background-color: #7440e3;
         transition: 0.2s ease-in-out;
     }
 `;
