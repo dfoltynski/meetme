@@ -111,6 +111,23 @@ const Dashboard = () => {
     >
       {isLoaded ? (
         <div>
+          {markers.map((marker) => {
+            <Marker
+              latitude={marker.lat}
+              longitude={marker.lng}
+              offsetLeft={-10}
+              offsetTop={-20}
+            >
+              <FontAwesomeIcon
+                icon={faMapMarkerAlt}
+                color="#6400fa"
+                style={{
+                  height: `${4 * viewport.zoom}px`,
+                  width: `${4 * viewport.zoom}px`,
+                }}
+              />
+            </Marker>;
+          })}
           <div
             style={{
               position: "absolute",
@@ -141,29 +158,10 @@ const Dashboard = () => {
           <FriendsBox friends={friends}></FriendsBox>
           <MessageBox></MessageBox>
 
-          {markers.map((marker) => {
-            <Marker
-              latitude={marker.lat}
-              longitude={marker.lng}
-              offsetLeft={-10}
-              offsetTop={-20}
-            >
-              {" "}
-              <FontAwesomeIcon
-                icon={faMapMarkerAlt}
-                color="#6400fa"
-                style={{
-                  height: `${4 * viewport.zoom}px`,
-                  width: `${4 * viewport.zoom}px`,
-                }}
-              />
-            </Marker>;
-          })}
-
           {showPopup ? (
             <Marker
-              latitude={52.06440436369671}
-              longitude={18.316406250002405}
+              latitude={lngLat.latitude}
+              longitude={lngLat.longitude}
               offsetLeft={-10}
               offsetTop={-20}
             >
