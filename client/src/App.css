@@ -6,99 +6,99 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 
 body {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 a {
-  text-decoration: none;
-  cursor: pointer;
-  color: white;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
 }
 
 a:visited {
-  color: white;
+    color: white;
 }
 
 .message__container {
-  position: absolute;
-  bottom: 0;
-  right: 20em;
-  width: 18em;
-  height: 21em;
-  border-radius: 10px 10px 0 0;
-  -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  cursor: default;
+    position: absolute;
+    bottom: 0;
+    right: 20em;
+    width: 18em;
+    height: 21em;
+    border-radius: 10px 10px 0 0;
+    -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    cursor: default;
 }
 
 .message__topbar {
-  border-radius: 10px 10px 0 0;
-  text-align: center;
-  background-color: #6400fa;
-  height: 3em;
-  color: white;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    background-color: #6400fa;
+    height: 3em;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .my_message {
-  display: block;
-  margin: 0.5em;
-  padding: 0.5em;
-  border-radius: 10px;
-  width: 10em;
-  display: inline-block;
-  word-wrap: break-word;
-  margin-left: auto;
-  background-color: #ebebeb;
-  color: black;
+    display: block;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 10px;
+    width: 10em;
+    display: inline-block;
+    word-wrap: break-word;
+    margin-left: auto;
+    background-color: #ebebeb;
+    color: black;
 }
 
 .received_message {
-  margin-right: auto;
-  background-color: #6400fa;
-  display: block;
-  margin: 0.5em;
-  padding: 0.5em;
-  border-radius: 10px;
-  color: white;
-  width: 10em;
-  display: inline-block;
-  word-wrap: break-word;
+    margin-right: auto;
+    background-color: #6400fa;
+    display: block;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 10px;
+    color: white;
+    width: 10em;
+    display: inline-block;
+    word-wrap: break-word;
 }
 
 .message__user {
-  /* margin: auto; */
-  margin: 0 0.2em;
+    /* margin: auto; */
+    margin: 0 0.2em;
 }
 
 .message__field {
-  overflow-y: scroll;
-  background-color: #fff;
-  height: 15.5em;
-  display: flex;
-  flex-direction: column;
-  /* position: relative; */
+    overflow-y: scroll;
+    background-color: #fff;
+    height: 15.5em;
+    display: flex;
+    flex-direction: column;
+    /* position: relative; */
 }
 
 .message__send__field {
-  background-color: #fff;
-  height: 2.5em;
-  display: flex;
+    background-color: #fff;
+    height: 2.5em;
+    display: flex;
 }
 
 form {
-  margin: auto;
+    margin: auto;
 }
 
 .message__send__field input {
-  border: none;
-  border-radius: 5px;
-  padding: 0.3em;
-  padding: 0.4em 1em;
-  border-radius: 10px;
+    border: none;
+    border-radius: 5px;
+    padding: 0.3em;
+    padding: 0.4em 1em;
+    border-radius: 10px;
 }
 
 /* input[type="text"] {
@@ -106,266 +106,266 @@ form {
 } */
 
 .message__send__field input[type="submit"] {
-  margin: 0 1em;
-  outline: none;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-weight: bolder;
-  background-color: #6400fa;
-  transition: 0.2s ease-in-out;
-  cursor: pointer;
-  color: white;
+    margin: 0 1em;
+    outline: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-weight: bolder;
+    background-color: #6400fa;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    color: white;
 }
 
 .message__send__field input[type="submit"]:hover {
-  background-color: #5400d3;
+    background-color: #5400d3;
 }
 
 .react-geocoder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .react-geocoder input {
-  border: none;
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  padding: 0.7em;
-  margin: 1em;
-  width: 20em;
-  outline: none;
+    border: none;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    padding: 0.7em;
+    margin: 1em;
+    width: 20em;
+    outline: none;
 }
 
 .react-geocoder-results {
-  -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  border-radius: 10px;
-  box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
-  background-color: #fff;
-  padding: 0.4em;
+    -webkit-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    -moz-box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    border-radius: 10px;
+    box-shadow: 0px 0px 29px -13px rgba(0, 0, 0, 0.51);
+    background-color: #fff;
+    padding: 0.4em;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .react-geocoder-item {
-  padding: 0.4em;
-  transition: 0.2s ease-in-out;
+    padding: 0.4em;
+    transition: 0.2s ease-in-out;
 }
 
 .react-geocoder-item:hover {
-  border-radius: 10px;
-  background-color: #f2f2f2;
-  transition: 0.2s ease-in-out;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    transition: 0.2s ease-in-out;
 }
 
 input {
-  outline: none;
+    outline: none;
 }
 
 .message__friend_avatar {
-  object-fit: cover;
-  border-radius: 100px;
-  width: 2.2em;
-  height: 2.2em;
+    object-fit: cover;
+    border-radius: 100px;
+    width: 2.2em;
+    height: 2.2em;
 }
 
 .message__topbar__friend_info {
-  margin: 0.5em;
+    margin: 0.5em;
 }
 
 .welcome__text {
-  margin: 15rem auto;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 120px;
-  color: #fff;
+    margin: 15rem auto;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 120px;
+    color: #fff;
 }
 
 .welcome__text__shortdesc {
-  font-weight: normal;
-  font-size: 24px;
+    font-weight: normal;
+    font-size: 24px;
 }
 
 .scrolldown_container {
-  cursor: pointer;
-  position: absolute;
-  margin: 0.5em;
-  bottom: 0;
-  left: 50%;
-  border: 3px solid #6400fa;
-  border-radius: 10px;
-  width: 1.3em;
-  height: 3.5em;
-  display: flex;
-  justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    margin: 0.5em;
+    bottom: 0;
+    left: 50%;
+    border: 3px solid #6400fa;
+    border-radius: 10px;
+    width: 1.3em;
+    height: 3.5em;
+    display: flex;
+    justify-content: center;
 }
 
 @keyframes slide-top {
-  0% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  100% {
-    -webkit-transform: translateY(-35px);
-    transform: translateY(-35px);
-  }
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    100% {
+        -webkit-transform: translateY(-35px);
+        transform: translateY(-35px);
+    }
 }
 
 .scrolldown_container__circle {
-  position: absolute;
-  bottom: 0.2em;
-  width: 1em;
-  height: 1em;
-  border-radius: 100px;
-  background-color: #6400fa;
-  -webkit-animation: slide-top 1.5s infinite alternate;
-  animation: slide-top 1.5s infinite alternate;
+    position: absolute;
+    bottom: 0.2em;
+    width: 1em;
+    height: 1em;
+    border-radius: 100px;
+    background-color: #6400fa;
+    -webkit-animation: slide-top 1.5s infinite alternate;
+    animation: slide-top 1.5s infinite alternate;
 }
 
 .joinus__button {
-  font-size: 24px;
-  font-weight: bold;
-  padding: 1em 3em;
-  background-color: #6400fa;
-  border: none;
-  color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.13);
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 1em 3em;
+    background-color: #6400fa;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.13);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
 .joinus__button:hover {
-  transition: 0.2s ease-in-out;
-  background-color: #5e00eb;
+    transition: 0.2s ease-in-out;
+    background-color: #5e00eb;
 }
 
 .showoff__container {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
 }
 
 .showoff {
-  margin: auto;
-  display: flex;
-  width: 70%;
+    margin: auto;
+    display: flex;
+    width: 70%;
 }
 
 .showoff_picture {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 96px;
-  font-weight: bold;
-  padding: 1rem;
-  color: #303030;
-  background-color: #f2f2f2;
-  box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.13);
-  width: 40rem;
-  height: 35rem;
-  margin: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 96px;
+    font-weight: bold;
+    padding: 1rem;
+    color: #303030;
+    background-color: #f2f2f2;
+    box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.13);
+    width: 40rem;
+    height: 35rem;
+    margin: 5rem;
 }
 
 .validation__error {
-  color: #f54242;
-  font-size: 14px;
-  font-family: Roboto;
-  font-weight: bold;
-  margin: 0;
+    color: #f54242;
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: bold;
+    margin: 0;
 }
 
 .sex__checkbox {
-  font-family: Roboto;
-  font-weight: 500;
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  margin: 0 0.37em;
-  padding-left: 1em;
+    font-family: Roboto;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0 0.37em;
+    padding-left: 1em;
 }
 
 .sex__checkbox input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
 .checkmark {
-  position: absolute;
-  top: 16%;
-  left: 0;
-  height: 14px;
-  width: 14px;
-  background-color: #c4c4c4;
-  border-radius: 100px;
+    position: absolute;
+    top: 16%;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    background-color: #c4c4c4;
+    border-radius: 100px;
 }
 
 .sex__checkbox:hover input ~ .checkmark {
-  background-color: #ccc;
+    background-color: #ccc;
 }
 
 .sex__checkbox input:checked ~ .checkmark {
-  background-color: #875ae6;
+    background-color: #875ae6;
 }
 
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+    content: "";
+    position: absolute;
+    display: none;
 }
 
 .sex__checkbox input:checked ~ .checkmark:after {
-  display: block;
+    display: block;
 }
 
 .user_profile_pic {
-  width: 3em;
-  height: 3em;
-  box-shadow: 0px 0px 28px 3px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  margin-right: 1.5em;
-  object-fit: cover;
+    width: 3em;
+    height: 3em;
+    box-shadow: 0px 0px 28px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    margin-right: 1.5em;
+    object-fit: cover;
 }
 
 .meeter__info {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .showoff_text {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: bold;
-  color: #6400fa;
-  margin: 5rem auto;
-  font-size: 90px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    color: #6400fa;
+    margin: 5rem auto;
+    font-size: 90px;
 }
 
 @media screen and (max-width: 1440px) {
-  .showoff_picture {
-    font-size: 36px;
-  }
+    .showoff_picture {
+        font-size: 36px;
+    }
 }
 
 @media screen and (max-width: 1024px) {
-  .welcome__text {
-    font-size: 82px;
-  }
-  .showoff_text {
-    font-size: 64px;
-  }
-  .showoff_picture {
-    font-size: 24px;
-  }
+    .welcome__text {
+        font-size: 82px;
+    }
+    .showoff_text {
+        font-size: 64px;
+    }
+    .showoff_picture {
+        font-size: 24px;
+    }
 }
