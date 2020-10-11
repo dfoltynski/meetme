@@ -31,3 +31,7 @@ export const setFriendPicture = (friend_avatar) => {
 export const setShowPopup = (showPopup) => {
     return { type: "SET_SHOW_POPUP", payload: { showPopup } };
 };
+
+export const setSpecificMarker = (specificMarker) => {
+    return { type: "SET_SPECIFIC_MARKER", payload: { specificMarker } };
+};

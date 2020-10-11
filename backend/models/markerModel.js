@@ -19,19 +19,3 @@ const markerSchema = new Schema(
 const Marker = mongoose.model("marker", markerSchema);
 
 module.exports = { Marker };
-
-// const mongoose = require("mongoose");
-// const Schema = mongoose.Schema;
-
-// const markerSchema = new Schema(
-//   {
-//     markup: [],
-//   },
-//   {
-//     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
-//   }
-// );
-
-// const Marker = mongoose.model("marker", markerSchema);
-
-// module.exports = { Marker };

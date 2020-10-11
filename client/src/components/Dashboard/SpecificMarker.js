@@ -1,27 +1,45 @@
 import React, { useState, useEffect } from "react";
+import { setSpecificMarker } from "../../actions";
+import { useDispatch } from "react-redux";
+
+import {
+    PopupForm,
+    Username,
+    MeetInfoBox,
+    SubmitMeet,
+} from "../styledcomponents";
 
 const SpecificMarker = ({ username, email, message, userProfilePicture }) => {
-    // useEffect(() => {
-    //     console.log(username, message, userProfilePicture, email);
-    // });
+    const dispatch = useDispatch();
+
+    const closePopup = () => {
+        dispatch(setSpecificMarker(false));
+    };
 
     return (
-        <div
-            style={{
-                width: "150px",
-                height: "150px",
-                backgroundColor: "#fff",
-                borderRadius: "10px",
-                boxShadow: "0px 0px 29px -13px rgba(0, 0, 0, 0.51)",
-            }}
-        >
-            <img
-                className="user_profile_pic"
-                src={`data:image/jpeg;base64,${userProfilePicture}`}
-            ></img>
-            {username}
-            {message}
-        </div>
+        <PopupForm>
+            <div
+                onClick={closePopup}
+                style={{
+                    position: "absolute",
+                    right: "1em",
+                    cursor: "pointer",
+                }}
+            >
+                X
+            </div>
+            <div className="meeter__info">
+                <img
+                    className="user_profile_pic"
+                    src={`data:image/jpeg;base64,${userProfilePicture}`}
+                ></img>
+                <Username disabled type="text" value={username} />
+                <div>[add]</div>
+            </div>
+
+            <MeetInfoBox type="text" value={message} disabled />
+            <SubmitMeet type="submit" value="Send message" />
+        </PopupForm>
     );
 };
 

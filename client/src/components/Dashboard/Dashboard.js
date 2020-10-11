@@ -17,6 +17,7 @@ import {
     setUserName,
     setUserToken,
     setShowPopup,
+    setSpecificMarker,
 } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,7 +30,6 @@ const Dashboard = () => {
     const [lngLat, setLngLat] = useState({});
     const [markers, setMarkers] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [showSpecificMarker, setShowSpecificMarker] = useState({});
     const [viewport, setViewport] = useState({
         width: "100vw",
         height: "100vh",
@@ -40,6 +40,7 @@ const Dashboard = () => {
 
     const dispatch = useDispatch();
     const showPopup = useSelector((state) => state.showPopup);
+    const specificMarker = useSelector((state) => state.specificMarker);
     const geolocateStyle = {
         position: "absolute",
         top: 0,
@@ -170,11 +171,13 @@ const Dashboard = () => {
                                 >
                                     <FontAwesomeIcon
                                         onClick={() =>
-                                            setShowSpecificMarker({
-                                                [marker.id]: !showSpecificMarker[
-                                                    marker.id
-                                                ],
-                                            })
+                                            dispatch(
+                                                setSpecificMarker({
+                                                    [marker.id]: !specificMarker[
+                                                        marker.id
+                                                    ],
+                                                })
+                                            )
                                         }
                                         icon={faMapMarkerAlt}
                                         color="#6400fa"
@@ -183,7 +186,7 @@ const Dashboard = () => {
                                             width: `${4 * viewport.zoom}px`,
                                         }}
                                     />
-                                    {showSpecificMarker[marker.id] ? (
+                                    {specificMarker[marker.id] ? (
                                         <SpecificMarker
                                             username={marker.name}
                                             email={marker.email}

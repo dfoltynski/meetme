@@ -6,6 +6,7 @@ import { combineReducers } from "redux";
 import setChatUsername from "./setChatUsername";
 import setFriendPicture from "./setFriendPicture";
 import setShowPopup from "./setShowPopup";
+import setSpecificMarker from "./setSpecificMarker";
 
 const allReducers = combineReducers({
     chatUser: setChatUser,
@@ -15,6 +16,7 @@ const allReducers = combineReducers({
     userName: setUserName,
     showPopup: setShowPopup,
     token: setUserToken,
+    specificMarker: setSpecificMarker,
 });
 
 export default allReducers;
