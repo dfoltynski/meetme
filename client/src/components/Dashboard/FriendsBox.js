@@ -17,9 +17,6 @@ import {
 const FriendsBox = ({ friends }) => {
     const [cookie, removeCookie] = useCookies();
     const dispatch = useDispatch();
-    // const friendsEmails = useSelector(
-    //     (state) => state.checkIfFriendAlreadyExist
-    // );
 
     const startChat = (e) => {
         dispatch(setChatUsername(e.target.childNodes[1].innerText));

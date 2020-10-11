@@ -24,7 +24,6 @@ const SpecificMarker = ({
 }) => {
     const [addFriendColor, setAddFriendColor] = useState("#875ae5");
     const [addFriendCursor, setAddFriendCursor] = useState("pointer");
-    // const [friendExist, setFriendExist] = useState({});
     const dispatch = useDispatch();
 
     const userEmail = useSelector((state) => state.userEmail);
