@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../../App.css";
 import FriendsBox from "./FriendsBox";
 import MessageBox from "./MessageBox";
 import Popup from "./Popup";
+import SpecificMarker from "./SpecificMarker";
 import ReactMapGL, {
     GeolocateControl,
     NavigationControl,
@@ -28,6 +29,7 @@ const Dashboard = () => {
     const [lngLat, setLngLat] = useState({});
     const [markers, setMarkers] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [showSpecificMarker, setShowSpecificMarker] = useState({});
     const [viewport, setViewport] = useState({
         width: "100vw",
         height: "100vh",
@@ -43,6 +45,7 @@ const Dashboard = () => {
         top: 0,
         right: 0,
     };
+    const reactGeocoder = useRef();
 
     const auth = async () => {
         try {
@@ -53,8 +56,8 @@ const Dashboard = () => {
             });
 
             getFriends();
-
             getMarkers();
+
             dispatch(setUserToken(cookie.token));
             dispatch(setUserEmail(cookie.email));
             dispatch(setUserName(cookie.name));
@@ -67,7 +70,7 @@ const Dashboard = () => {
         }
     };
 
-    const createImagePreview = (bufferArray) => {
+    const createFriendImagePreview = (bufferArray) => {
         Object.entries(bufferArray).map((friend) => {
             let imgBinary = Array.prototype.map
                 .call(friend[1].picture.data, (ch) => {
@@ -85,6 +88,29 @@ const Dashboard = () => {
         });
     };
 
+    const createMarkerUserPreview = (bufferArray) => {
+        Object.entries(bufferArray).map((marker) => {
+            let imgBinary = Array.prototype.map
+                .call(marker[1].profile_pic.data, (ch) => {
+                    return String.fromCharCode(ch);
+                })
+                .join("");
+            console.log(marker);
+            setMarkers((oldMarkers) => [
+                ...oldMarkers,
+                {
+                    id: marker[1].id,
+                    latitude: marker[1].latitude,
+                    longitude: marker[1].longitude,
+                    message: marker[1].message,
+                    name: marker[1].username,
+                    email: marker[1].email,
+                    img: btoa(imgBinary),
+                },
+            ]);
+        });
+    };
+
     const createPopup = (e) => {
         const [longitude, latitude] = e.lngLat;
         setLngLat({ longitude, latitude });
@@ -94,8 +120,8 @@ const Dashboard = () => {
 
     const getMarkers = async () => {
         let markers = await axios.get("http://localhost:8080/v1/markers");
-
-        setMarkers(markers.data.markers);
+        createMarkerUserPreview(markers.data);
+        console.log(markers.data);
     };
 
     const getFriends = async () => {
@@ -104,8 +130,9 @@ const Dashboard = () => {
                 "Bearer-Authorization": cookie.token,
             },
         });
+        console.log(friendsRes.data);
 
-        createImagePreview(friendsRes.data);
+        createFriendImagePreview(friendsRes.data);
     };
 
     useEffect(() => {
@@ -132,23 +159,40 @@ const Dashboard = () => {
                             zIndex: 1,
                         }}
                     >
+                        {markers.map((marker) => console.log(marker))}
                         {markers.map((marker) => (
-                            <Marker
-                                latitude={marker.lat}
-                                longitude={marker.lng}
-                                offsetLeft={-10}
-                                offsetTop={-20}
-                                key={marker._id}
-                            >
-                                <FontAwesomeIcon
-                                    icon={faMapMarkerAlt}
-                                    color="#6400fa"
-                                    style={{
-                                        height: `${4 * viewport.zoom}px`,
-                                        width: `${4 * viewport.zoom}px`,
-                                    }}
-                                />
-                            </Marker>
+                            <React.Fragment key={marker.id}>
+                                <Marker
+                                    latitude={marker.latitude}
+                                    longitude={marker.longitude}
+                                    offsetLeft={-10}
+                                    offsetTop={-20}
+                                >
+                                    <FontAwesomeIcon
+                                        onClick={() =>
+                                            setShowSpecificMarker({
+                                                [marker.id]: !showSpecificMarker[
+                                                    marker.id
+                                                ],
+                                            })
+                                        }
+                                        icon={faMapMarkerAlt}
+                                        color="#6400fa"
+                                        style={{
+                                            height: `${4 * viewport.zoom}px`,
+                                            width: `${4 * viewport.zoom}px`,
+                                        }}
+                                    />
+                                    {showSpecificMarker[marker.id] ? (
+                                        <SpecificMarker
+                                            username={marker.name}
+                                            email={marker.email}
+                                            message={marker.message}
+                                            userProfilePicture={marker.img}
+                                        />
+                                    ) : null}
+                                </Marker>
+                            </React.Fragment>
                         ))}
                         <Geocoder
                             mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
@@ -156,6 +200,7 @@ const Dashboard = () => {
                             hideOnSelect={true}
                             limit={10}
                             onSelected={(viewport) => setViewport(viewport)}
+                            ref={reactGeocoder}
                         />
                     </div>
 
