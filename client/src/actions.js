@@ -35,3 +35,7 @@ export const setShowPopup = (showPopup) => {
 export const setSpecificMarker = (specificMarker) => {
     return { type: "SET_SPECIFIC_MARKER", payload: { specificMarker } };
 };
+
+export const checkIfFriendAlreadyExist = (friends) => {
+    return { type: "CHECK_IF_FRIEND_ALREADY_EXIST", payload: { friends } };
+};

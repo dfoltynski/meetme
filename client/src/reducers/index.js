@@ -7,6 +7,7 @@ import setChatUsername from "./setChatUsername";
 import setFriendPicture from "./setFriendPicture";
 import setShowPopup from "./setShowPopup";
 import setSpecificMarker from "./setSpecificMarker";
+import checkIfFriendAlreadyExist from "./checkIfFriendAlreadyExist";
 
 const allReducers = combineReducers({
     chatUser: setChatUser,
@@ -17,6 +18,7 @@ const allReducers = combineReducers({
     showPopup: setShowPopup,
     token: setUserToken,
     specificMarker: setSpecificMarker,
+    checkIfFriendAlreadyExist,
 });
 
 export default allReducers;

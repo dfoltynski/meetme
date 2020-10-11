@@ -1,7 +1,12 @@
-import React from "react";
+import React, { memo, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
-import { setChatUser, setChatUsername, setFriendPicture } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    setChatUser,
+    setChatUsername,
+    setFriendPicture,
+    checkIfFriendAlreadyExist,
+} from "../../actions";
 import {
     DashboardSection,
     FriendProfilePicture,
@@ -12,6 +17,9 @@ import {
 const FriendsBox = ({ friends }) => {
     const [cookie, removeCookie] = useCookies();
     const dispatch = useDispatch();
+    // const friendsEmails = useSelector(
+    //     (state) => state.checkIfFriendAlreadyExist
+    // );
 
     const startChat = (e) => {
         dispatch(setChatUsername(e.target.childNodes[1].innerText));
@@ -26,26 +34,33 @@ const FriendsBox = ({ friends }) => {
         window.location = "/login";
     };
 
+    useEffect(() => {
+        [...friends].map((friend) => {
+            dispatch(checkIfFriendAlreadyExist(friend.email));
+        });
+    });
+
     return (
         <DashboardSection>
             <h1>Friends</h1>
             <LogoutButton onClick={Logout}>Log out</LogoutButton>
-
-            {friends.map((friend) => (
-                <SpecificFriendLabel
-                    value={friend.email}
-                    onClick={startChat}
-                    value={friend.email}
-                    key={friend.email}
-                >
-                    <FriendProfilePicture
-                        src={`data:image/jpeg;base64,${friend.img}`}
-                    ></FriendProfilePicture>
-                    <p style={{ marginLeft: "0.3em" }}>{friend.name}</p>
-                </SpecificFriendLabel>
-            ))}
+            <div style={{ overflowY: "auto", maxHeight: "600px" }}>
+                {[...friends].map((friend) => (
+                    <SpecificFriendLabel
+                        value={friend.email}
+                        onClick={startChat}
+                        value={friend.email}
+                        key={friend.email}
+                    >
+                        <FriendProfilePicture
+                            src={`data:image/jpeg;base64,${friend.img}`}
+                        ></FriendProfilePicture>
+                        <p style={{ marginLeft: "0.3em" }}>{friend.name}</p>
+                    </SpecificFriendLabel>
+                ))}
+            </div>
         </DashboardSection>
     );
 };
 
-export default FriendsBox;
+export default memo(FriendsBox);

@@ -79,13 +79,6 @@ const MessageBox = () => {
                                 </li>
                             ) : null
                         )}
-                        {/* {messages.map((message, index) =>
-              chatUser === message.friend ? (
-                <li className="received_message" key={index}>
-                  {message.message}
-                </li>
-              ) : null
-            )} */}
                     </div>
                     <div className="message__send__field">
                         {chatUsername !== "Select a friend to talk to..." ? (

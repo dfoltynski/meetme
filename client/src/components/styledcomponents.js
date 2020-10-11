@@ -84,8 +84,9 @@ export const Section = styled.section`
 `;
 
 export const DashboardSection = styled.section`
+    top: 0;
     cursor: default;
-
+    position: absolute;
     margin: 1em;
     text-align: center;
     background-color: #ffffff;

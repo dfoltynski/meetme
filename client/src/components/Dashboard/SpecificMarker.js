@@ -12,15 +12,19 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import io from "socket.io-client";
 
+const socket = io("http://localhost:8080");
 const SpecificMarker = ({
-    id,
+    friendExist,
     username,
     email,
     message,
     userProfilePicture,
 }) => {
     const [addFriendColor, setAddFriendColor] = useState("#875ae5");
+    const [addFriendCursor, setAddFriendCursor] = useState("pointer");
+    // const [friendExist, setFriendExist] = useState({});
     const dispatch = useDispatch();
 
     const userEmail = useSelector((state) => state.userEmail);
@@ -30,11 +34,15 @@ const SpecificMarker = ({
     };
 
     const addFriend = () => {
+        setAddFriendColor("#bdbdbd");
+        setAddFriendColor("default");
         axios.post("http://localhost:8080/v1/add-friend/", {
             userEmail,
             email,
         });
-        setAddFriendColor("#bdbdbd");
+
+        socket.emit("add friend", userProfilePicture, username, email);
+        dispatch(setSpecificMarker(false));
     };
 
     const sendMessage = (e) => {
@@ -59,16 +67,18 @@ const SpecificMarker = ({
                     src={`data:image/jpeg;base64,${userProfilePicture}`}
                 ></img>
                 <Username disabled type="text" value={username} />
-                <FontAwesomeIcon
-                    icon={faUserPlus}
-                    style={{
-                        color: `${addFriendColor}`,
-                        height: "25px",
-                        margin: "0 1em",
-                        cursor: "pointer",
-                    }}
-                    onClick={addFriend}
-                ></FontAwesomeIcon>
+                {friendExist[email] ? (
+                    <FontAwesomeIcon
+                        icon={faUserPlus}
+                        style={{
+                            color: `${addFriendColor}`,
+                            height: "25px",
+                            margin: "0 1em",
+                            cursor: `${addFriendCursor}`,
+                        }}
+                        onClick={addFriend}
+                    ></FontAwesomeIcon>
+                ) : null}
             </div>
 
             <MeetInfoBox type="text" value={message} disabled />

@@ -12,6 +12,7 @@ import ReactMapGL, {
     Marker,
 } from "react-map-gl";
 import Geocoder from "react-mapbox-gl-geocoder";
+import io from "socket.io-client";
 import {
     setUserEmail,
     setUserName,
@@ -24,9 +25,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
+const socket = io("http://localhost:8080");
 const Dashboard = () => {
     const [cookie, removeCookie] = useCookies();
-    const [friends, setFriends] = useState([]);
+    const [friends, setFriends] = useState(new Set(friends));
+    const [friendExist, setFriendExist] = useState({});
+    const friendsEmails = useSelector(
+        (state) => state.checkIfFriendAlreadyExist
+    );
+
     const [lngLat, setLngLat] = useState({});
     const [markers, setMarkers] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -78,6 +85,7 @@ const Dashboard = () => {
                     return String.fromCharCode(ch);
                 })
                 .join("");
+
             setFriends((oldFriends) => [
                 ...oldFriends,
                 {
@@ -133,48 +141,135 @@ const Dashboard = () => {
         createFriendImagePreview(friendsRes.data);
     };
 
+    const clickedMarker = (marker) => {
+        dispatch(
+            setSpecificMarker({
+                [marker.id]: !specificMarker[marker.id],
+            })
+        );
+        if (friendsEmails.includes(marker.email)) {
+            console.log(`${marker.email} juz istnieje`);
+            setFriendExist({ [marker.email]: false });
+        }
+    };
+
     useEffect(() => {
         auth();
     }, []);
 
+    socket.on("fetch friend", (userProfilePicture, username, email) => {
+        setFriends([
+            ...friends,
+            { name: username, email, img: userProfilePicture },
+        ]);
+    });
+
     return (
-        <ReactMapGL
-            {...viewport}
-            onViewportChange={(nextViewport) => setViewport(nextViewport)}
-            mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
-            onDblClick={(e) => createPopup(e)}
-            onLoad={(e) => setIsLoaded(true)}
+        <div
+            className="nad_mapa"
+            style={{ position: "absolute", height: "100vh", width: "100vw" }}
         >
-            {isLoaded ? (
-                <React.Fragment>
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            width: "100vw",
-                            display: "flex",
-                            justifyContent: "center",
-                            zIndex: 1,
-                        }}
-                    >
-                        {markers.map((marker) => (
-                            <React.Fragment key={marker.id}>
-                                <Marker
-                                    latitude={marker.latitude}
-                                    longitude={marker.longitude}
-                                    offsetLeft={-10}
-                                    offsetTop={-20}
-                                >
+            <ReactMapGL
+                {...viewport}
+                onViewportChange={(nextViewport) => setViewport(nextViewport)}
+                mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
+                onDblClick={(e) => createPopup(e)}
+                onLoad={(e) => setIsLoaded(true)}
+            >
+                {isLoaded ? (
+                    <React.Fragment>
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                width: "100vw",
+                                display: "flex",
+                                justifyContent: "center",
+                                zIndex: 1,
+                            }}
+                        >
+                            {markers.map((marker) => (
+                                <React.Fragment key={marker.id}>
+                                    <Marker
+                                        latitude={marker.latitude}
+                                        longitude={marker.longitude}
+                                        offsetLeft={-10}
+                                        offsetTop={-20}
+                                    >
+                                        <FontAwesomeIcon
+                                            onClick={() => {
+                                                dispatch(
+                                                    setSpecificMarker({
+                                                        [marker.id]: !specificMarker[
+                                                            marker.id
+                                                        ],
+                                                    })
+                                                );
+                                                if (
+                                                    friendsEmails.includes(
+                                                        marker.email
+                                                    )
+                                                ) {
+                                                    console.log(
+                                                        `${marker.email} juz istnieje`
+                                                    );
+                                                    setFriendExist({
+                                                        [marker.email]: false,
+                                                    });
+                                                } else {
+                                                    setFriendExist({
+                                                        [marker.email]: true,
+                                                    });
+                                                }
+                                            }}
+                                            icon={faMapMarkerAlt}
+                                            color="#6400fa"
+                                            style={{
+                                                height: `${
+                                                    4 * viewport.zoom
+                                                }px`,
+                                                width: `${4 * viewport.zoom}px`,
+                                            }}
+                                        />
+                                        {specificMarker[marker.id] ? (
+                                            <SpecificMarker
+                                                friendExist={friendExist}
+                                                id={marker.id}
+                                                username={marker.name}
+                                                email={marker.email}
+                                                message={marker.message}
+                                                userProfilePicture={marker.img}
+                                            />
+                                        ) : null}
+                                    </Marker>
+                                </React.Fragment>
+                            ))}
+                        </div>
+
+                        <GeolocateControl
+                            positionOptions={{ enableHighAccuracy: true }}
+                            trackUserLocation={true}
+                            style={geolocateStyle}
+                        />
+                        <div
+                            style={{
+                                position: "absolute",
+                                right: 0,
+                                top: "3em",
+                            }}
+                        >
+                            <NavigationControl />
+                        </div>
+
+                        {showPopup ? (
+                            <Marker
+                                latitude={lngLat.latitude}
+                                longitude={lngLat.longitude}
+                                offsetLeft={-10}
+                                offsetTop={-20}
+                            >
+                                <div>
                                     <FontAwesomeIcon
-                                        onClick={() =>
-                                            dispatch(
-                                                setSpecificMarker({
-                                                    [marker.id]: !specificMarker[
-                                                        marker.id
-                                                    ],
-                                                })
-                                            )
-                                        }
                                         icon={faMapMarkerAlt}
                                         color="#6400fa"
                                         style={{
@@ -182,71 +277,27 @@ const Dashboard = () => {
                                             width: `${4 * viewport.zoom}px`,
                                         }}
                                     />
-                                    {specificMarker[marker.id] ? (
-                                        <SpecificMarker
-                                            id={marker.id}
-                                            username={marker.name}
-                                            email={marker.email}
-                                            message={marker.message}
-                                            userProfilePicture={marker.img}
-                                        />
-                                    ) : null}
-                                </Marker>
-                            </React.Fragment>
-                        ))}
-                        <Geocoder
-                            mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
-                            viewport={viewport}
-                            hideOnSelect={true}
-                            limit={10}
-                            onSelected={(viewport) => setViewport(viewport)}
-                            ref={reactGeocoder}
-                        />
-                    </div>
-
-                    <GeolocateControl
-                        positionOptions={{ enableHighAccuracy: true }}
-                        trackUserLocation={true}
-                        style={geolocateStyle}
-                    />
-                    <div
-                        style={{
-                            position: "absolute",
-                            right: 0,
-                            top: "3em",
-                        }}
-                    >
-                        <NavigationControl />
-                    </div>
-                    <FriendsBox friends={friends}></FriendsBox>
-                    <MessageBox></MessageBox>
-
-                    {showPopup ? (
-                        <Marker
-                            latitude={lngLat.latitude}
-                            longitude={lngLat.longitude}
-                            offsetLeft={-10}
-                            offsetTop={-20}
-                        >
-                            <div>
-                                <FontAwesomeIcon
-                                    icon={faMapMarkerAlt}
-                                    color="#6400fa"
-                                    style={{
-                                        height: `${4 * viewport.zoom}px`,
-                                        width: `${4 * viewport.zoom}px`,
-                                    }}
-                                />
-                                <Popup
-                                    user_id={cookie.user_id}
-                                    lngLat={lngLat}
-                                ></Popup>
-                            </div>
-                        </Marker>
-                    ) : null}
-                </React.Fragment>
-            ) : null}
-        </ReactMapGL>
+                                    <Popup
+                                        user_id={cookie.user_id}
+                                        lngLat={lngLat}
+                                    ></Popup>
+                                </div>
+                            </Marker>
+                        ) : null}
+                    </React.Fragment>
+                ) : null}
+            </ReactMapGL>
+            <Geocoder
+                mapboxApiAccessToken="pk.eyJ1IjoiZHppYWRkYXdpZCIsImEiOiJja2EzMzRzZXMwN2ZoM2ZsOWFhZXdpeGt0In0.sRWxNOOhq4VLBER1For06g"
+                viewport={viewport}
+                hideOnSelect={true}
+                limit={10}
+                onSelected={(viewport) => setViewport(viewport)}
+                ref={reactGeocoder}
+            />
+            <FriendsBox friends={friends}></FriendsBox>
+            <MessageBox></MessageBox>
+        </div>
     );
 };
 

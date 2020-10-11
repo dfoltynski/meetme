@@ -156,9 +156,15 @@ exports.secretInfo = (req, res) => {
 
 exports.addFriend = async (req, res) => {
     const { userEmail, email } = req.body;
-    await User.update(
+    await User.updateOne(
         { email: userEmail },
         { $addToSet: { friends: email } },
+        { new: true, useFindAndModify: false }
+    );
+
+    await User.updateOne(
+        { email },
+        { $addToSet: { friends: userEmail } },
         { new: true, useFindAndModify: false }
     );
 
