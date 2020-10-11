@@ -42,7 +42,5 @@ exports.getMarker = async (req, res) => {
         {}
     );
 
-    console.log(markersObject);
-
     res.status(200).json(markersObject);
 };

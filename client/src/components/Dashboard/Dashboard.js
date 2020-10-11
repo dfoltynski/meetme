@@ -96,7 +96,6 @@ const Dashboard = () => {
                     return String.fromCharCode(ch);
                 })
                 .join("");
-            console.log(marker);
             setMarkers((oldMarkers) => [
                 ...oldMarkers,
                 {
@@ -122,7 +121,6 @@ const Dashboard = () => {
     const getMarkers = async () => {
         let markers = await axios.get("http://localhost:8080/v1/markers");
         createMarkerUserPreview(markers.data);
-        console.log(markers.data);
     };
 
     const getFriends = async () => {
@@ -131,7 +129,6 @@ const Dashboard = () => {
                 "Bearer-Authorization": cookie.token,
             },
         });
-        console.log(friendsRes.data);
 
         createFriendImagePreview(friendsRes.data);
     };
@@ -160,7 +157,6 @@ const Dashboard = () => {
                             zIndex: 1,
                         }}
                     >
-                        {markers.map((marker) => console.log(marker))}
                         {markers.map((marker) => (
                             <React.Fragment key={marker.id}>
                                 <Marker
@@ -188,6 +184,7 @@ const Dashboard = () => {
                                     />
                                     {specificMarker[marker.id] ? (
                                         <SpecificMarker
+                                            id={marker.id}
                                             username={marker.name}
                                             email={marker.email}
                                             message={marker.message}

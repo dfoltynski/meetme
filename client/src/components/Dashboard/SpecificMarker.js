@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { setSpecificMarker } from "../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 import {
     PopupForm,
@@ -9,15 +10,39 @@ import {
     SubmitMeet,
 } from "../styledcomponents";
 
-const SpecificMarker = ({ username, email, message, userProfilePicture }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+
+const SpecificMarker = ({
+    id,
+    username,
+    email,
+    message,
+    userProfilePicture,
+}) => {
+    const [addFriendColor, setAddFriendColor] = useState("#875ae5");
     const dispatch = useDispatch();
+
+    const userEmail = useSelector((state) => state.userEmail);
 
     const closePopup = () => {
         dispatch(setSpecificMarker(false));
     };
 
+    const addFriend = () => {
+        axios.post("http://localhost:8080/v1/add-friend/", {
+            userEmail,
+            email,
+        });
+        setAddFriendColor("#bdbdbd");
+    };
+
+    const sendMessage = (e) => {
+        e.preventDefault();
+    };
+
     return (
-        <PopupForm>
+        <PopupForm onSubmit={sendMessage}>
             <div
                 onClick={closePopup}
                 style={{
@@ -34,7 +59,16 @@ const SpecificMarker = ({ username, email, message, userProfilePicture }) => {
                     src={`data:image/jpeg;base64,${userProfilePicture}`}
                 ></img>
                 <Username disabled type="text" value={username} />
-                <div>[add]</div>
+                <FontAwesomeIcon
+                    icon={faUserPlus}
+                    style={{
+                        color: `${addFriendColor}`,
+                        height: "25px",
+                        margin: "0 1em",
+                        cursor: "pointer",
+                    }}
+                    onClick={addFriend}
+                ></FontAwesomeIcon>
             </div>
 
             <MeetInfoBox type="text" value={message} disabled />
