@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../../App.css";
@@ -148,8 +148,9 @@ const Dashboard = () => {
             })
         );
         if (friendsEmails.includes(marker.email)) {
-            console.log(`${marker.email} juz istnieje`);
             setFriendExist({ [marker.email]: false });
+        } else {
+            setFriendExist({ [marker.email]: true });
         }
     };
 
@@ -197,31 +198,9 @@ const Dashboard = () => {
                                         offsetTop={-20}
                                     >
                                         <FontAwesomeIcon
-                                            onClick={() => {
-                                                dispatch(
-                                                    setSpecificMarker({
-                                                        [marker.id]: !specificMarker[
-                                                            marker.id
-                                                        ],
-                                                    })
-                                                );
-                                                if (
-                                                    friendsEmails.includes(
-                                                        marker.email
-                                                    )
-                                                ) {
-                                                    console.log(
-                                                        `${marker.email} juz istnieje`
-                                                    );
-                                                    setFriendExist({
-                                                        [marker.email]: false,
-                                                    });
-                                                } else {
-                                                    setFriendExist({
-                                                        [marker.email]: true,
-                                                    });
-                                                }
-                                            }}
+                                            onClick={() =>
+                                                clickedMarker(marker)
+                                            }
                                             icon={faMapMarkerAlt}
                                             color="#6400fa"
                                             style={{
@@ -301,4 +280,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

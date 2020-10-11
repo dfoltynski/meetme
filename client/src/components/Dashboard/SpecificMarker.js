@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, memo } from "react";
 import { setSpecificMarker } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import { setChatUser, setChatUsername, setFriendPicture } from "../../actions";
 import {
     PopupForm,
     Username,
@@ -22,8 +22,6 @@ const SpecificMarker = ({
     message,
     userProfilePicture,
 }) => {
-    const [addFriendColor, setAddFriendColor] = useState("#875ae5");
-    const [addFriendCursor, setAddFriendCursor] = useState("pointer");
     const dispatch = useDispatch();
 
     const userEmail = useSelector((state) => state.userEmail);
@@ -33,8 +31,6 @@ const SpecificMarker = ({
     };
 
     const addFriend = () => {
-        setAddFriendColor("#bdbdbd");
-        setAddFriendColor("default");
         axios.post("http://localhost:8080/v1/add-friend/", {
             userEmail,
             email,
@@ -46,6 +42,10 @@ const SpecificMarker = ({
 
     const sendMessage = (e) => {
         e.preventDefault();
+        dispatch(setChatUsername(e.target.childNodes[1].childNodes[1].value));
+        dispatch(setChatUser(e.target.childNodes[1].childNodes[0].alt));
+        dispatch(setFriendPicture(e.target.childNodes[1].childNodes[0].src));
+        dispatch(setSpecificMarker(false));
     };
 
     return (
@@ -64,16 +64,17 @@ const SpecificMarker = ({
                 <img
                     className="user_profile_pic"
                     src={`data:image/jpeg;base64,${userProfilePicture}`}
+                    alt={email}
                 ></img>
                 <Username disabled type="text" value={username} />
                 {friendExist[email] ? (
                     <FontAwesomeIcon
                         icon={faUserPlus}
                         style={{
-                            color: `${addFriendColor}`,
+                            color: "875ae5",
                             height: "25px",
                             margin: "0 1em",
-                            cursor: `${addFriendCursor}`,
+                            cursor: "pointer",
                         }}
                         onClick={addFriend}
                     ></FontAwesomeIcon>
@@ -86,4 +87,4 @@ const SpecificMarker = ({
     );
 };
 
-export default SpecificMarker;
+export default memo(SpecificMarker);
