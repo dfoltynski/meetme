@@ -6,6 +6,7 @@
 <li>- [ ] <b>improve MessageBox performance</b></li>
 <li>- [ ] <b>scroll to the bottom of MessageBox each time new message is sent</b></li>
 <li>- [ ] <b>Realtime markers</b></li>
+<li>- [ ] <b>Change "wierd" to "weird" on screenshots</b></li>
 <li>- [ ] <b>100% there is something more to do</b></li>
 </ul>
 <h3 align="left">🔧 Tools:</h3>
