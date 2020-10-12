@@ -15,3 +15,12 @@
 <img src="https://i.imgur.com/8xR8k4y.png"></img>
 <img src="https://i.imgur.com/ecUxXbB.png"></img>
 <img src="https://i.imgur.com/2MECa7o.png"></img>
+<h3 align="left">Usage:</h3>
+```sh
+cd meetme
+cd backend && npm install --save && nodemon server.js
+```
+open new terminal
+```sh
+cd client && npm install --save && npm start
+```
