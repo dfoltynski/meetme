@@ -2,6 +2,7 @@
 
 <h3 align="left">⬜ To do:</h3>
 <ul align="left"> 
+<li>- [ ] <b>Mobile version in React Native</b></li>
 <li>- [ ] <b>improve MessageBox performance</b></li>
 <li>- [ ] <b>scroll to the bottom of MessageBox each time new message is sent</b></li>
 <li>- [ ] <b>Realtime markers</b></li>
