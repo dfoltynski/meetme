@@ -257,7 +257,9 @@ input {
 .showoff {
     margin: auto;
     display: flex;
-    width: 70%;
+    width: 100vw;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .showoff_picture {
@@ -267,13 +269,15 @@ input {
     text-align: center;
     font-size: 96px;
     font-weight: bold;
-    padding: 1rem;
     color: #303030;
-    background-color: #f2f2f2;
-    box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.13);
-    width: 40rem;
+    width: 80%;
     height: 35rem;
     margin: 5rem;
+    object-fit: cover;
+    border: 4px solid #875ae5;
+    box-shadow: 0px 0px 28px 3px rgba(135, 90, 229, 0.25);
+    border-radius: 12px;
+    max-width: 10em;
 }
 
 .validation__error {
@@ -354,9 +358,37 @@ input {
     color: #6400fa;
     margin: 5rem auto;
     font-size: 90px;
+    text-align: center;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 425px) and (max-device-width: 425px) {
+    .welcome__text {
+        font-size: 50px;
+    }
+
+    .welcome__text__shortdesc {
+        margin: 0 0.2em;
+        font-size: 16px;
+    }
+
+    .joinus__button {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) and (max-device-width: 768px) {
+    .showoff_text {
+        font-size: 55px;
+    }
+}
+
+@media screen and (max-width: 375px) and (max-device-width: 375px) {
+    .showoff_text {
+        font-size: 40px;
+    }
+}
+
+/* @media screen and (max-width: 1440px) {
     .showoff_picture {
         font-size: 36px;
     }
@@ -372,4 +404,4 @@ input {
     .showoff_picture {
         font-size: 24px;
     }
-}
+} */
