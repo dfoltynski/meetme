@@ -16,6 +16,7 @@
 <img src="https://i.imgur.com/ecUxXbB.png"></img>
 <img src="https://i.imgur.com/2MECa7o.png"></img>
 <h3 align="left">Usage:</h3>
+<b>CREATE PUBLIC FOLDER IN BACKEND</b>
 ```sh
 cd meetme
 cd backend && npm install --save && nodemon server.js
