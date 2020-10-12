@@ -147,10 +147,13 @@ const Dashboard = () => {
                 [marker.id]: !specificMarker[marker.id],
             })
         );
-        if (friendsEmails.includes(marker.email)) {
-            setFriendExist({ [marker.email]: false });
-        } else {
+        if (
+            friendsEmails.includes(marker.email) ||
+            marker.email === cookie.email
+        ) {
             setFriendExist({ [marker.email]: true });
+        } else {
+            setFriendExist({ [marker.email]: false });
         }
     };
 

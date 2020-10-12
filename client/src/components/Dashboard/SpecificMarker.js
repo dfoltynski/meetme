@@ -1,6 +1,8 @@
 import React, { useState, memo } from "react";
 import { setSpecificMarker } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+
 import axios from "axios";
 import { setChatUser, setChatUsername, setFriendPicture } from "../../actions";
 import {
@@ -23,6 +25,7 @@ const SpecificMarker = ({
     userProfilePicture,
 }) => {
     const dispatch = useDispatch();
+    const [cookie, removeCookie] = useCookies();
 
     const userEmail = useSelector((state) => state.userEmail);
 
@@ -67,7 +70,7 @@ const SpecificMarker = ({
                     alt={email}
                 ></img>
                 <Username disabled type="text" value={username} />
-                {friendExist[email] ? (
+                {!friendExist[email] ? (
                     <FontAwesomeIcon
                         icon={faUserPlus}
                         style={{
@@ -82,7 +85,9 @@ const SpecificMarker = ({
             </div>
 
             <MeetInfoBox type="text" value={message} disabled />
-            <SubmitMeet type="submit" value="Send message" />
+            {email !== cookie.email ? (
+                <SubmitMeet type="submit" value="Send message" />
+            ) : null}
         </PopupForm>
     );
 };
