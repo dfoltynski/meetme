@@ -40,8 +40,6 @@ const users = new Map();
 io.on("connection", (socket) => {
     socket.on("add user", (email) => {
         users.set(email, socket.id);
-
-        // console.log(users);
     });
 
     socket.on("add friend", (userProfilePicture, username, email) => {
@@ -49,10 +47,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("start chat", (message, friend, sender) => {
-        // console.log(`\n`);
-        // console.log(`${sender}: ${message} to ${friend}`);
-        // console.log("friend id: ", users.get(friend));
-        // console.log("sender id: ", users.get(sender));
         io.to(users.get(friend)).emit("send message", sender, message, friend);
     });
 });
