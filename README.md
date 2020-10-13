@@ -18,12 +18,18 @@
 <img src="https://i.imgur.com/ecUxXbB.png"></img>
 <img src="https://i.imgur.com/2MECa7o.png"></img>
 <h3 align="left">Usage:</h3>
-<b>CREATE PUBLIC FOLDER IN BACKEND</b>
-```sh
-cd meetme
-cd backend && npm install --save && nodemon server.js
+<b>CREATE PUBLIC FOLDER IN BACKEND</b> <br>
+
+```bash
+git clone https://github.com/dfoltynski/meetme.git
+cd meetme/
+cd client/ && npm i --save
+npm start
 ```
-open new terminal
-```sh
-cd client && npm install --save && npm start
+
+Open new terminal
+
+```bash
+cd backend/ && npm i --save
+nodemon server.js
 ```
